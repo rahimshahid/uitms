@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.university.rahim.datacollection.Ui.SensorActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <com.jjoe64.graphview.GraphView
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:id="@+id/graph_acc" />
+
+        <TextView
+            android:id="@+id/tv_x"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="X axis"
+            android:textSize="22sp"/>
+
+        <TextView
+            android:id="@+id/tv_y"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Y axis"
+            android:textSize="22sp"/>
+
+        <TextView
+            android:id="@+id/tv_z"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Z axis"
+            android:textSize="22sp"/>
+
+         <LinearLayout
+             android:id="@+id/eventButtonContainer"
+             android:orientation="vertical"
+             android:paddingTop="28dp"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content">
+
+            <Button
+                android:visibility="visible"
+                android:id="@+id/bt_stable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorYellow"
+                android:text="Stable"/>
+
+             <Button
+                 android:visibility="gone"
+                 android:id="@+id/bt_moving"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:background="@color/colorRed"
+                 android:text="Phone moving!"/>
+
+             <Button
+                 android:visibility="gone"
+                 android:id="@+id/bt_tap"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:background="@color/colorGreen"
+                 android:text="Tap Detected!!"/>
+
+         </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>
