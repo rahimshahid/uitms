@@ -1,7 +1,6 @@
 package com.university.rahim.datacollection.Utils;
 
-import android.app.Activity;
-import android.content.Context;
+import android.os.Handler;
 import android.util.Log;
 
 import com.university.rahim.datacollection.Ui.SensorActivity;
@@ -12,6 +11,9 @@ import com.university.rahim.datacollection.Ui.SensorActivity;
 
 public class TapDetector {
     private static final String TAG = "dbg_TapDetector";
+    private static final double x_flat = 0d;
+    private static final double y_flat = 0d;
+    private static final double z_flat = 9.8d;
     private int totalTaps = 0;
 
     private Callback listener;
@@ -22,64 +24,101 @@ public class TapDetector {
     private double abnormalityThresholdMin = 0.0d;
     private double abnormalityThresholdMax = 0.0d;
     private double tapProbability = 0.0d;
+    private double tapProbabilityIncrement = 0.0d;
+    private double flatPlacementMargin = 0.3d;
+    private int ignoringperiodMilliSec = 0;
+    private boolean ignoringPeriodActive = false;
 
     public TapDetector(SensorActivity activity, int size, double abnormalityThresholdMin,
-                       double abnormalityThresholdMax) {
+                       double abnormalityThresholdMax, int wavePointsToDetect, int ignoringPeriodMilliSeconds) {
         listener = activity;
-        qX = new LimitedSizeQueue<Double>(size);
-        qY = new LimitedSizeQueue<Double>(size);
-        qZ = new LimitedSizeQueue<Double>(size);
         qSize = size;
+        qX = new LimitedSizeQueue<Double>(qSize);
+        qY = new LimitedSizeQueue<Double>(qSize);
+        qZ = new LimitedSizeQueue<Double>(qSize);
         this.abnormalityThresholdMin = abnormalityThresholdMin;
         this.abnormalityThresholdMax = abnormalityThresholdMax;
+        this.tapProbabilityIncrement = 1/wavePointsToDetect;
+        this.ignoringperiodMilliSec = ignoringPeriodMilliSeconds;
         for (int i=0; i<qSize; i++) {
             qX.add(0.0d);
             qY.add(0.0d);
             qZ.add(0.0d);
         }
+        this.ignoreTapDetectionFor(2000); //Do not detect taps for first 2 seconds
     }
 
     public void add(double x, double y, double z) {
-        if (this.isAbnormal(x, y, z) || tapProbability > 0) {
-            this.checkForTap(x, y, z);
+        if (!phonePlacedFlat(x, y, z)) {
+            return;
         }
+        if (!ignoringPeriodActive) {
+            if (this.isAbnormalInTapRange(x, y, z) || this.disturbanceOccuredPreviously()) {
+                this.checkForTap(x, y, z);
+            }
+        }
+
         qX.add(x);
         qY.add(y);
         qZ.add(z);
     }
 
-    private boolean isAbnormal(double x, double y, double z) {
-        if (checkMinuteDisturbanceOnValue(z, this.getAvgZ()) || checkMinuteDisturbanceOnValue(x, this.getAvgX()) ||
-                checkMinuteDisturbanceOnValue(y, this.getAvgY())) {
+    private boolean phonePlacedFlat(double x, double y, double z) {
+        if (Math.abs(x - x_flat) <= flatPlacementMargin && Math.abs(y - y_flat) <= flatPlacementMargin
+                && Math.abs(z - z_flat) <= flatPlacementMargin)
+            return true;
+        return false;
+    }
+
+    private boolean isAbnormalInTapRange(double x, double y, double z) {
+        if (checkMinuteDisturbanceOnValue(x, this.getAvgX()) || checkMinuteDisturbanceOnValue(y, this.getAvgY()) ||
+                checkMinuteDisturbanceOnValue(z, this.getAvgZ())) {
             return true;
         }
         return false;
     }
 
     private boolean isDifferent(double x, double y, double z) {
-        if (checkMinuteDisturbanceOnValue(z, qZ.getYongest()) || checkMinuteDisturbanceOnValue(x, qX.getYongest()) ||
-                checkMinuteDisturbanceOnValue(y, qY.getYongest())) {
+        if (checkMinuteDisturbanceOnValue(x, qX.getYongest()) || checkMinuteDisturbanceOnValue(y, qY.getYongest()) ||
+                checkMinuteDisturbanceOnValue(z, qZ.getYongest())) {
             return true;
         }
         return false;
     }
 
+    private boolean disturbanceOccuredPreviously(){
+        if (tapProbability > 0)
+            return true;
+        return false;
+    }
+
     private void checkForTap(double x, double y, double z){
-        if (isDifferent(x, y, z)) {
-            tapProbability += 0.99d;
-        } else {
-            tapProbability = 0.0d;
+        if (isDifferent(x, y, z) || true) { //TODO: isDiffernt to be checked
+            tapProbability += tapProbabilityIncrement;
         }
-        if (tapProbability >= 0.90d) {
+        if (tapProbability >= 0.99d) {
             Log.d(TAG, "checkForTap: " + "true" + totalTaps);
             tapProbability = 0.0d;
             totalTaps++;
+            ignoreTapDetectionFor(ignoringperiodMilliSec);
             listener.tapDetectedCallback();
         }
     }
 
-    private boolean checkMinuteDisturbanceOnValue(double xyz, double xyzAvg){
-        return (Math.abs(xyz - xyzAvg)) >= abnormalityThresholdMin && (Math.abs(xyz - xyzAvg)) <= abnormalityThresholdMax;
+    private void ignoreTapDetectionFor(int timeMilliSec) {
+        ignoringPeriodActive = true;
+
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                ignoringPeriodActive = false;
+            }
+        }, timeMilliSec);
+    }
+
+    private boolean checkMinuteDisturbanceOnValue(double value, double valueAvg){
+        return (Math.abs(value - valueAvg)) >= abnormalityThresholdMin && (Math.abs(value - valueAvg)) <= abnormalityThresholdMax;
     }
 
     public double getAvgX() {

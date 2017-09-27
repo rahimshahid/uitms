@@ -51,7 +51,7 @@ public class SensorActivity extends AppCompatActivity implements SensorEventList
                     SensorManager.SENSOR_DELAY_GAME);
         } else return;
 
-        tapDetector = new TapDetector(this, 40, 0.1, 0.9);
+        tapDetector = new TapDetector(this, 40, 0.1, 0.9, 1, 250);
         this.initView();
     }
 
@@ -95,7 +95,6 @@ public class SensorActivity extends AppCompatActivity implements SensorEventList
         SensorActivity.this.findViewById(R.id.bt_stable).setVisibility(View.VISIBLE);
         SensorActivity.this.findViewById(R.id.bt_moving).setVisibility(View.GONE);
         SensorActivity.this.findViewById(R.id.bt_tap).setVisibility(View.GONE);
-
     }
 
     private void updateTextViews(double ax, double ay, double az) {
@@ -123,8 +122,7 @@ public class SensorActivity extends AppCompatActivity implements SensorEventList
             ay=event.values[1];
             az=event.values[2];
             tapDetector.add(ax, ay, az);
-            //this.updateTextViews(event.values[0], event.values[1], event.values[2]);
-            this.updateTextViews(tapDetector.getAvgX(), tapDetector.getAvgY(), tapDetector.getAvgZ());
+            this.updateTextViews(event.values[0], event.values[1], event.values[2]);
             this.updateGraph(event.values[0], event.values[1], event.values[2]);
         }
     }
@@ -146,6 +144,6 @@ public class SensorActivity extends AppCompatActivity implements SensorEventList
             public void run() {
                 resetTapStateButton();
             }
-        }, 500);
+        }, 250);
     }
 }
