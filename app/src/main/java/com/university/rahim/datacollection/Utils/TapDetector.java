@@ -135,6 +135,7 @@ public class TapDetector {
         for (int i=0; i<qSize; i++) {
             avg += qY.get(i);
         }
+        //CHANGE!!!
         avg /= qSize;
         return  avg;
     }
