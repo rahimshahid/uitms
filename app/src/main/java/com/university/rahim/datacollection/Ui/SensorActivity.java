@@ -17,7 +17,10 @@ import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 import com.university.rahim.datacollection.R;
+import com.university.rahim.datacollection.Utils.SensorValue;
 import com.university.rahim.datacollection.Utils.TapDetector;
+
+import java.util.ArrayList;
 
 public class SensorActivity extends AppCompatActivity implements SensorEventListener , TapDetector.Callback{
     public static final String TAG = "dbg_Sensor Activity";
@@ -145,5 +148,14 @@ public class SensorActivity extends AppCompatActivity implements SensorEventList
                 resetTapStateButton();
             }
         }, 250);
+    }
+
+    @Override
+    public void fetchWaveRequest() {
+        Log.d(TAG, "fetchWaveRequest: ");
+        ArrayList arr = tapDetector.getWave();
+        for (int i=0; i< arr.size(); i++) {
+            Log.d(TAG, ((SensorValue)arr.get(i)).getZ() + ", \n");
+        }
     }
 }

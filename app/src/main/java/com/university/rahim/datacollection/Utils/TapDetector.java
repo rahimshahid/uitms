@@ -5,6 +5,8 @@ import android.util.Log;
 
 import com.university.rahim.datacollection.Ui.SensorActivity;
 
+import java.util.ArrayList;
+
 /**
  * Created by RAHIM on 9/9/2017.
  */
@@ -18,6 +20,7 @@ public class TapDetector {
 
     private Callback listener;
     private LimitedSizeQueue q;
+    private ArrayList waveOnTap;
     private int qSize;
     private double abnormalityThresholdMin = 0.0d;
     private double abnormalityThresholdMax = 0.0d;
@@ -51,8 +54,14 @@ public class TapDetector {
                 this.checkForTap(x, y, z);
             }
         }
-
         q.add(new SensorValue(x, y, z));
+        if (waveOnTap != null) {
+            waveOnTap.add(new SensorValue(x, y, z));
+            if (waveOnTap.size() >= 12) {
+                waveOnTap.add(new SensorValue(0, 0, 0));
+                listener.fetchWaveRequest();
+            }
+        }
     }
 
     private boolean phonePlacedFlat(double x, double y, double z) {
@@ -93,6 +102,9 @@ public class TapDetector {
             tapProbability = 0.0d;
             totalTaps++;
             ignoreTapDetectionFor(ignoringperiodMilliSec);
+            waveOnTap = new ArrayList();
+            waveOnTap.add(new SensorValue(0, 0, 0));
+            waveOnTap.add(new SensorValue(z, y, z));
             listener.tapDetectedCallback();
         }
     }
@@ -140,8 +152,18 @@ public class TapDetector {
         return  avg;
     }
 
+    public ArrayList<SensorValue> getWave() {
+        ArrayList arr = new ArrayList<SensorValue>();
+        for (int i = 0; i < waveOnTap.size(); i++) {
+            arr.add(waveOnTap.get(i));
+        }
+        waveOnTap.clear();
+        waveOnTap = null;
+        return arr;
+    }
+
     public interface Callback{
         void tapDetectedCallback();
-
+        void fetchWaveRequest();
     }
 }
