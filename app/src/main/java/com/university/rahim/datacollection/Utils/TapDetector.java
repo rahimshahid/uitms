@@ -17,9 +17,7 @@ public class TapDetector {
     private int totalTaps = 0;
 
     private Callback listener;
-    private LimitedSizeQueue <Double> qX;
-    private LimitedSizeQueue <Double> qY;
-    private LimitedSizeQueue <Double> qZ;
+    private LimitedSizeQueue q;
     private int qSize;
     private double abnormalityThresholdMin = 0.0d;
     private double abnormalityThresholdMax = 0.0d;
@@ -33,17 +31,13 @@ public class TapDetector {
                        double abnormalityThresholdMax, int wavePointsToDetect, int ignoringPeriodMilliSeconds) {
         listener = activity;
         qSize = size;
-        qX = new LimitedSizeQueue<Double>(qSize);
-        qY = new LimitedSizeQueue<Double>(qSize);
-        qZ = new LimitedSizeQueue<Double>(qSize);
+        q = new LimitedSizeQueue<SensorValue>(qSize);
         this.abnormalityThresholdMin = abnormalityThresholdMin;
         this.abnormalityThresholdMax = abnormalityThresholdMax;
         this.tapProbabilityIncrement = 1/wavePointsToDetect;
         this.ignoringperiodMilliSec = ignoringPeriodMilliSeconds;
         for (int i=0; i<qSize; i++) {
-            qX.add(0.0d);
-            qY.add(0.0d);
-            qZ.add(0.0d);
+            q.add(new SensorValue());
         }
         this.ignoreTapDetectionFor(2000); //Do not detect taps for first 2 seconds
     }
@@ -58,9 +52,7 @@ public class TapDetector {
             }
         }
 
-        qX.add(x);
-        qY.add(y);
-        qZ.add(z);
+        q.add(new SensorValue(x, y, z));
     }
 
     private boolean phonePlacedFlat(double x, double y, double z) {
@@ -79,14 +71,14 @@ public class TapDetector {
     }
 
     private boolean isDifferent(double x, double y, double z) {
-        if (checkMinuteDisturbanceOnValue(x, qX.getYongest()) || checkMinuteDisturbanceOnValue(y, qY.getYongest()) ||
-                checkMinuteDisturbanceOnValue(z, qZ.getYongest())) {
+        if (checkMinuteDisturbanceOnValue(x, ((SensorValue)q.getYongest()).getX()) || checkMinuteDisturbanceOnValue(y, ((SensorValue)q.getYongest()).getY()) ||
+                checkMinuteDisturbanceOnValue(z, ((SensorValue)q.getYongest()).getZ())) {
             return true;
         }
         return false;
     }
 
-    private boolean disturbanceOccuredPreviously(){
+    private boolean disturbanceOccuredPreviously() {
         if (tapProbability > 0)
             return true;
         return false;
@@ -124,7 +116,7 @@ public class TapDetector {
     public double getAvgX() {
         double avg = 0.0d;
         for (int i=0; i<qSize; i++) {
-            avg += qX.get(i);
+            avg += ((SensorValue)q.get(i)).getX();
         }
         avg /= qSize;
         return  avg;
@@ -133,9 +125,8 @@ public class TapDetector {
     public double getAvgY() {
         double avg = 0.0d;
         for (int i=0; i<qSize; i++) {
-            avg += qY.get(i);
+            avg += ((SensorValue)q.get(i)).getY();
         }
-        //CHANGE!!!
         avg /= qSize;
         return  avg;
     }
@@ -143,7 +134,7 @@ public class TapDetector {
     public double getAvgZ() {
         double avg = 0.0d;
         for (int i=0; i<qSize; i++) {
-            avg += qZ.get(i);
+            avg += ((SensorValue)q.get(i)).getZ();
         }
         avg /= qSize;
         return  avg;
@@ -151,5 +142,6 @@ public class TapDetector {
 
     public interface Callback{
         void tapDetectedCallback();
+
     }
 }
