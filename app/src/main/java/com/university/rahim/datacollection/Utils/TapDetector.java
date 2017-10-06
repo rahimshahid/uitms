@@ -105,7 +105,7 @@ public class TapDetector {
             waveOnTap = new ArrayList();
             waveOnTap.add(new SensorValue(0, 0, 0));
             waveOnTap.add(new SensorValue(z, y, z));
-            listener.tapDetectedCallback();
+            listener.tapDetected();
         }
     }
 
@@ -163,7 +163,9 @@ public class TapDetector {
     }
 
     public interface Callback{
-        void tapDetectedCallback();
+        // Called everytime a tap is detected
+        void tapDetected();
+        // Called to notify subscribers that the wave after TAP is ready to be fetched. Fetch the wave using getWave() method.
         void fetchWaveRequest();
     }
 }

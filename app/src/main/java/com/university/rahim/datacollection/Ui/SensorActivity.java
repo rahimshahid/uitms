@@ -54,6 +54,7 @@ public class SensorActivity extends AppCompatActivity implements SensorEventList
                     SensorManager.SENSOR_DELAY_GAME);
         } else return;
 
+        // Created a TapDetector
         tapDetector = new TapDetector(this, 40, 0.1, 0.9, 1, 250);
         this.initView();
     }
@@ -124,6 +125,7 @@ public class SensorActivity extends AppCompatActivity implements SensorEventList
             ax=event.values[0];
             ay=event.values[1];
             az=event.values[2];
+            // Giving information to the Tap Detector
             tapDetector.add(ax, ay, az);
             this.updateTextViews(event.values[0], event.values[1], event.values[2]);
             this.updateGraph(event.values[0], event.values[1], event.values[2]);
@@ -135,8 +137,10 @@ public class SensorActivity extends AppCompatActivity implements SensorEventList
         // Do nothing
     }
 
+    // Since this activity is using a TapDetector, it should implement these below functions
+
     @Override
-    public void tapDetectedCallback() {
+    public void tapDetected() {
         this.findViewById(R.id.bt_stable).setVisibility(View.GONE);
         this.findViewById(R.id.bt_moving).setVisibility(View.GONE);
         this.findViewById(R.id.bt_tap).setVisibility(View.VISIBLE);
@@ -154,6 +158,10 @@ public class SensorActivity extends AppCompatActivity implements SensorEventList
     public void fetchWaveRequest() {
         Log.d(TAG, "fetchWaveRequest: ");
         ArrayList arr = tapDetector.getWave();
+        // At this point we have the wave in a ArrayList
+
+
+        // TODO: remove this print; its only for debugging
         for (int i=0; i< arr.size(); i++) {
             Log.d(TAG, ((SensorValue)arr.get(i)).getZ() + ", \n");
         }
