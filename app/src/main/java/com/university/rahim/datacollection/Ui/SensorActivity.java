@@ -1,5 +1,6 @@
 package com.university.rahim.datacollection.Ui;
 
+import android.content.Intent;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.hardware.Sensor;
@@ -12,6 +13,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
@@ -23,7 +25,7 @@ import com.university.rahim.datacollection.Utils.TapDetector;
 
 import java.util.ArrayList;
 
-public class SensorActivity extends AppCompatActivity implements SensorEventListener , TapDetector.Callback{
+public class SensorActivity extends AppCompatActivity implements SensorEventListener , TapDetector.Callback, View.OnClickListener{
     public static final String TAG = "dbg_Sensor Activity";
 
     private SensorManager sensorManager;
@@ -33,6 +35,7 @@ public class SensorActivity extends AppCompatActivity implements SensorEventList
     GraphView graph;
     TapDetector tapDetector;
     CSVHandler csvHandler;
+    int direction;           //1: Above, 2:Below, 3:Left, 4:Right
 
     LineGraphSeries<DataPoint> series_x = new LineGraphSeries<DataPoint>(new DataPoint[] {});
     LineGraphSeries<DataPoint> series_y = new LineGraphSeries<DataPoint>(new DataPoint[] {});
@@ -44,6 +47,7 @@ public class SensorActivity extends AppCompatActivity implements SensorEventList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sensor);
 
+        direction = 1;
         csvHandler = new CSVHandler("WaveData");
 
         String sensorType = getIntent().getExtras().getString("sensor");
@@ -68,6 +72,28 @@ public class SensorActivity extends AppCompatActivity implements SensorEventList
     protected void onPause() {
         super.onPause();
         sensorManager.unregisterListener(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.bt_above:
+                direction = 1;
+                Toast.makeText(this, "Recording Above.", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.bt_below:
+                direction = 2;
+                Toast.makeText(this, "Recording below.", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.bt_left:
+                direction = 3;
+                Toast.makeText(this, "Recording left.", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.bt_right:
+                direction = 4;
+                Toast.makeText(this, "Recording right.", Toast.LENGTH_SHORT).show();
+                break;
+        }
     }
 
     private void initView(){
@@ -164,7 +190,7 @@ public class SensorActivity extends AppCompatActivity implements SensorEventList
         Log.d(TAG, "fetchWaveRequest: ");
         ArrayList arr = tapDetector.getWave();
         // At this point we have the wave in a ArrayList
-        csvHandler.writeWaveTofile(arr);
+        csvHandler.writeWaveTofile(arr, direction);
 
         // TODO: remove this print; its only for debugging
         for (int i=0; i< arr.size(); i++) {

@@ -1,5 +1,6 @@
 package com.university.rahim.datacollection.Utils;
 
+import android.graphics.Path;
 import android.os.Environment;
 
 import java.io.File;
@@ -15,9 +16,9 @@ import com.opencsv.*;
 
 public class CSVHandler
 {
-
     private File file;
     private CSVWriter writer;
+
 
     public CSVHandler(String fileName)
     {
@@ -37,7 +38,7 @@ public class CSVHandler
                 e.printStackTrace();
             }
 
-            String[] columns = {"1","2","3","4","5","6","7", "8","9","10","11","12","13","14","direction"};
+            String[] columns = {"1","2","3","4","5","6","7","8","9","10","11","12","13","direction"};
             writer.writeNext(columns);
             try {
                 writer.close();
@@ -50,7 +51,7 @@ public class CSVHandler
 
     }
 
-    public void writeWaveTofile(ArrayList<SensorValue> arr)
+    public void writeWaveTofile(ArrayList<SensorValue> arr, int dir)
     {
         String[] values;
         ArrayList<String> List = new ArrayList<String>();
@@ -65,6 +66,15 @@ public class CSVHandler
         {
             List.add(Double.toString(arr.get(i).getZ()));
         }
+
+        if(dir == 1)
+            List.add("Above");
+        else if(dir == 2)
+            List.add("Below");
+        else if(dir == 3)
+            List.add("Left");
+        else if(dir == 4)
+            List.add("Right");
 
         values = List.toArray(new String[0]);              //assign the list to a string array
 

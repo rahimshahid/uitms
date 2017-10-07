@@ -8,7 +8,8 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:id="@+id/scrollView">
 
         <LinearLayout
         android:layout_width="match_parent"
@@ -73,10 +74,48 @@
                  android:background="@color/colorGreen"
                  android:text="Tap Detected!!"/>
 
+
+
+             <Button
+                 android:text="Above"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:id="@+id/bt_above"
+
+                 android:layout_marginTop="35dp"
+                 android:onClick="onClick" />
+
+             <Button
+                 android:text="Below"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:id="@+id/bt_below"
+                 android:onClick="onClick" />
+
+             <Button
+                 android:text="Left"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:id="@+id/bt_left"
+                 android:layout_marginRight="77dp"
+                 android:layout_marginEnd="77dp"
+                 android:onClick="onClick" />
+
+             <Button
+                 android:text="Right"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_marginRight="92dp"
+                 android:layout_marginEnd="92dp"
+                 android:id="@+id/bt_right"
+                 android:onClick="onClick" />
+
          </LinearLayout>
 
         </LinearLayout>
 
     </ScrollView>
+
+
 
 </RelativeLayout>
