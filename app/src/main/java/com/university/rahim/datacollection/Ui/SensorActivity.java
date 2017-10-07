@@ -17,6 +17,7 @@ import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 import com.university.rahim.datacollection.R;
+import com.university.rahim.datacollection.Utils.CSVHandler;
 import com.university.rahim.datacollection.Utils.SensorValue;
 import com.university.rahim.datacollection.Utils.TapDetector;
 
@@ -31,6 +32,7 @@ public class SensorActivity extends AppCompatActivity implements SensorEventList
     static final String X = "X -> ", Y = "Y -> ", Z = "Z -> ";
     GraphView graph;
     TapDetector tapDetector;
+    CSVHandler csvHandler;
 
     LineGraphSeries<DataPoint> series_x = new LineGraphSeries<DataPoint>(new DataPoint[] {});
     LineGraphSeries<DataPoint> series_y = new LineGraphSeries<DataPoint>(new DataPoint[] {});
@@ -41,6 +43,9 @@ public class SensorActivity extends AppCompatActivity implements SensorEventList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sensor);
+
+        csvHandler = new CSVHandler("WaveData");
+
         String sensorType = getIntent().getExtras().getString("sensor");
         Log.d(TAG, "onCreate: " + sensorType);
 
@@ -159,7 +164,7 @@ public class SensorActivity extends AppCompatActivity implements SensorEventList
         Log.d(TAG, "fetchWaveRequest: ");
         ArrayList arr = tapDetector.getWave();
         // At this point we have the wave in a ArrayList
-
+        csvHandler.writeWaveTofile(arr);
 
         // TODO: remove this print; its only for debugging
         for (int i=0; i< arr.size(); i++) {
