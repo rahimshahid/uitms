@@ -47,7 +47,8 @@ public class TapDetector {
 
     public void add(double x, double y, double z) {
         if (!phonePlacedFlat(x, y, z)) {
-            return;
+            //TODO: remove eventually
+            //return;
         }
         if (!ignoringPeriodActive) {
             if (this.isAbnormalInTapRange(x, y, z) || this.disturbanceOccuredPreviously()) {
