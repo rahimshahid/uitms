@@ -16,8 +16,10 @@ public class TapDetector {
     private static final double x_flat = 0d;
     private static final double y_flat = 0d;
     private static final double z_flat = 9.8d;
-    private int totalTaps = 0;
+    private static final int resultant_wave_length = 8;
+    private static final double flatPlacementMargin = 1d;
 
+    private int totalTaps = 0;
     private Callback listener;
     private LimitedSizeQueue q;
     private ArrayList waveOnTap;
@@ -26,7 +28,6 @@ public class TapDetector {
     private double abnormalityThresholdMax = 0.0d;
     private double tapProbability = 0.0d;
     private double tapProbabilityIncrement = 0.0d;
-    private double flatPlacementMargin = 0.3d;
     private int ignoringperiodMilliSec = 0;
     private boolean ignoringPeriodActive = false;
 
@@ -47,8 +48,7 @@ public class TapDetector {
 
     public void add(double x, double y, double z) {
         if (!phonePlacedFlat(x, y, z)) {
-            //TODO: remove eventually
-            //return;
+            return;
         }
         if (!ignoringPeriodActive) {
             if (this.isAbnormalInTapRange(x, y, z) || this.disturbanceOccuredPreviously()) {
@@ -58,8 +58,8 @@ public class TapDetector {
         q.add(new SensorValue(x, y, z));
         if (waveOnTap != null) {
             waveOnTap.add(new SensorValue(x, y, z));
-            if (waveOnTap.size() >= 12) {
-                waveOnTap.add(new SensorValue(0, 0, 0));
+            if (waveOnTap.size() >= resultant_wave_length) {
+                //waveOnTap.add(new SensorValue(0, 0, 0));
                 listener.fetchWaveRequest();
             }
         }
@@ -104,7 +104,7 @@ public class TapDetector {
             totalTaps++;
             ignoreTapDetectionFor(ignoringperiodMilliSec);
             waveOnTap = new ArrayList();
-            waveOnTap.add(new SensorValue(0, 0, 0));
+            //waveOnTap.add(new SensorValue(0, 0, 0));
             waveOnTap.add(new SensorValue(z, y, z));
             listener.tapDetected();
         }
