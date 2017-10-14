@@ -38,7 +38,7 @@ public class CSVHandler
                 e.printStackTrace();
             }
 
-            String[] columns = {"1","2","3","4","5","6","7","8","9","10","11","12","13","direction"};
+            String[] columns = {"X1","X2","X3","X4","X5","X6","X7","X8","Y1","Y2","Y3","Y4","Y5","Y6","Y7","Y8","Z1","Z2","Z3","Z4","Z5","Z6","Z7","Z8", "direction"};
             writer.writeNext(columns);
             try {
                 writer.close();
@@ -60,6 +60,17 @@ public class CSVHandler
             writer = new CSVWriter(new FileWriter(file, true)); //  'true' means it will append to the file instead of overwriting it.
         } catch (IOException e) {
             e.printStackTrace();
+        }
+
+        //Write all the axes
+        for(int i=0; i<arr.size(); i++)
+        {
+            List.add(Double.toString(arr.get(i).getX()));
+        }
+
+        for(int i=0; i<arr.size(); i++)
+        {
+            List.add(Double.toString(arr.get(i).getY()));
         }
 
         for(int i=0; i<arr.size(); i++)
