@@ -194,7 +194,7 @@ public class SensorActivity extends AppCompatActivity implements SensorEventList
 
         // TODO: remove this print; its only for debugging
         for (int i=0; i< arr.size(); i++) {
-            Log.d(TAG, ((SensorValue)arr.get(i)).getZ() + " "+ i +", \n");
+            Log.d(TAG, ((SensorValue)arr.get(i)).getX() + " "+ i +", \n");
         }
     }
 }

@@ -16,7 +16,7 @@ public class TapDetector {
     private static final double x_flat = 0d;
     private static final double y_flat = 0d;
     private static final double z_flat = 9.8d;
-    private static final int resultant_wave_length = 24;
+    private static final int resultant_wave_length = 32;
     private static final double flatPlacementMargin = 1d;
 
     private int totalTaps = 0;
