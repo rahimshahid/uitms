@@ -105,7 +105,7 @@ public class TapDetector {
             ignoreTapDetectionFor(ignoringperiodMilliSec);
             waveOnTap = new ArrayList();
             //waveOnTap.add(new SensorValue(0, 0, 0));
-            waveOnTap.add(new SensorValue(z, y, z));
+            waveOnTap.add(new SensorValue(x, y, z));
             listener.tapDetected();
         }
     }
