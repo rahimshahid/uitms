@@ -4,7 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/DataCollection.iml" filepath="$PROJECT_DIR$/DataCollection.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/fyp.iml" filepath="$PROJECT_DIR$/fyp.iml" />
+      <module fileurl="file://E:\AndroidProjects\DataCollection\fyp.iml" filepath="E:\AndroidProjects\DataCollection\fyp.iml" />
       <module fileurl="file://$PROJECT_DIR$/opencsv/opencsv.iml" filepath="$PROJECT_DIR$/opencsv/opencsv.iml" />
     </modules>
   </component>
