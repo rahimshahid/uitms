@@ -93,6 +93,22 @@ public class SensorActivity extends AppCompatActivity implements SensorEventList
                 direction = 4;
                 Toast.makeText(this, "Recording right.", Toast.LENGTH_SHORT).show();
                 break;
+            case R.id.bt_leftAbove:
+                direction = 5;
+                Toast.makeText(this, "Recording TopLeft.", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.bt_rightAbove:
+                direction = 6;
+                Toast.makeText(this, "Recording TopRight.", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.bt_leftBelow:
+                direction = 7;
+                Toast.makeText(this, "Recording BottomLeft.", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.bt_rightBelow:
+                direction = 8;
+                Toast.makeText(this, "Recording BottomRight.", Toast.LENGTH_SHORT).show();
+                break;
         }
     }
 

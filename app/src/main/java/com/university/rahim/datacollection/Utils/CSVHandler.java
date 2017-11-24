@@ -89,6 +89,14 @@ public class CSVHandler
             List.add("Left");
         else if(dir == 4)
             List.add("Right");
+        else if(dir == 5)
+            List.add("TopLeft");
+        else if(dir == 6)
+            List.add("TopRight");
+        else if(dir == 7)
+            List.add("BottomLeft");
+        else if(dir == 8)
+            List.add("BottomRight");
 
         values = List.toArray(new String[0]);              //assign the list to a string array
 
