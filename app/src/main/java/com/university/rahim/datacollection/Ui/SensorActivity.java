@@ -32,10 +32,11 @@ public class SensorActivity extends AppCompatActivity implements SensorEventList
     double ax,ay,az;
     TextView tv_x, tv_y, tv_z;
     static final String X = "X -> ", Y = "Y -> ", Z = "Z -> ";
+    int counter = 0;
     GraphView graph;
     TapDetector tapDetector;
     CSVHandler csvHandler;
-    int direction;           //1: Above, 2:Below, 3:Left, 4:Right
+    int direction;           //1: Above, 2:Below, 3:Left, 4:Right...
 
     LineGraphSeries<DataPoint> series_x = new LineGraphSeries<DataPoint>(new DataPoint[] {});
     LineGraphSeries<DataPoint> series_y = new LineGraphSeries<DataPoint>(new DataPoint[] {});
@@ -174,8 +175,12 @@ public class SensorActivity extends AppCompatActivity implements SensorEventList
             az=event.values[2];
             // Giving information to the Tap Detector
             tapDetector.add(ax, ay, az);
-            this.updateTextViews(event.values[0], event.values[1], event.values[2]);
-            this.updateGraph(event.values[0], event.values[1], event.values[2]);
+            if(counter % 6 == 0) {
+                this.updateTextViews(event.values[0], event.values[1], event.values[2]);
+                this.updateGraph(event.values[0], event.values[1], event.values[2]);
+            }
+            counter++;
+            if(counter >= 6000) counter =0;
         }
     }
 
