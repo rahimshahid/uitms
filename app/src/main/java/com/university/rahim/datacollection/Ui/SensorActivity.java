@@ -214,8 +214,10 @@ public class SensorActivity extends AppCompatActivity implements SensorEventList
         csvHandler.writeWaveTofile(arr, direction);
 
         // TODO: remove this print; its only for debugging
+        /*
         for (int i=0; i< arr.size(); i++) {
             Log.d(TAG, ((SensorValue)arr.get(i)).getX() + " "+ i +", \n");
         }
+        */
     }
 }
