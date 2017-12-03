@@ -175,6 +175,7 @@ public class SensorActivity extends AppCompatActivity implements SensorEventList
             az=event.values[2];
             // Giving information to the Tap Detector
             tapDetector.add(ax, ay, az);
+            // Reduce updation rate
             if(counter % 6 == 0) {
                 this.updateTextViews(event.values[0], event.values[1], event.values[2]);
                 this.updateGraph(event.values[0], event.values[1], event.values[2]);
@@ -197,13 +198,7 @@ public class SensorActivity extends AppCompatActivity implements SensorEventList
         this.findViewById(R.id.bt_moving).setVisibility(View.GONE);
         this.findViewById(R.id.bt_tap).setVisibility(View.VISIBLE);
 
-        final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                resetTapStateButton();
-            }
-        }, 250);
+        new Handler().postDelayed(() -> resetTapStateButton(),250);
     }
 
     @Override

@@ -77,6 +77,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 MainActivity.this.startActivity(myIntent2);
                 break;
             case R.id.bt_mic:
+                Intent myIntent3 = new Intent(MainActivity.this, CasualActivity.class);
+                MainActivity.this.startActivity(myIntent3);
                 break;
         }
     }

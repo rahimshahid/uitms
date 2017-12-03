@@ -127,6 +127,7 @@
                     android:onClick="onClick" />
 
                 <Button
+                    android:visibility="gone"
                     android:text="Top-Right"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -136,6 +137,7 @@
                     android:onClick="onClick" />
 
                 <Button
+                    android:visibility="gone"
                     android:text="Bottom-Right"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -146,6 +148,8 @@
                     android:onClick="onClick" />
 
                 <Button
+                    android:visibility="gone"
+
                     android:text="Top-Left"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentLeft="true"
@@ -155,6 +159,7 @@
                     android:onClick="onClick" />
 
                 <Button
+                    android:visibility="gone"
                     android:text="Bottom-Left"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentLeft="true"

@@ -19,7 +19,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Ui.SensorActivity"></activity>
+        <activity android:name=".Ui.SensorActivity" />
+        <activity android:name=".Ui.CasualActivity"></activity>
     </application>
 
 </manifest>
