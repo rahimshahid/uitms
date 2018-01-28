@@ -60,19 +60,20 @@ public class Subscription implements SensorEventListener {
             public void getWaveOnTap(ArrayList<SensorValue> arr) {
                 Log.d(TAG, "getWaveOnTap: ");
                 double []wav = new double[96];
-                int i = 0 ;
-                for (; i<arr.size();i++) {
+
+                for (int i = 0; i<arr.size();i++) {
                     wav[i] = (arr.get(i).getX());
                 }
-                for (; i<arr.size();i++) {
-                    wav[i] = (arr.get(i).getY());
+                for (int i = 0; i<arr.size();i++) {
+                    wav[i + 32] = (arr.get(i).getY());
                 }
-                for (; i<arr.size();i++) {
-                    wav[i] = (arr.get(i).getZ());
+                for (int i = 0; i<arr.size();i++) {
+                    wav[i + 64] = (arr.get(i).getZ());
                 }
 
                 try {
-                    String res = evalClassifier(Subscription.rf, Subscription.arrg);
+                    String res = evalClassifier(rf, wav);
+                    Log.d(TAG, "result: " + res);
                 }
                 catch (Exception e){
                     Log.d(TAG, "run: " + e.toString());

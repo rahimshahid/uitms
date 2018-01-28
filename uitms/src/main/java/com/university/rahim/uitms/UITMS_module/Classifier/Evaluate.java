@@ -123,11 +123,11 @@ public class Evaluate {
 		String actualClass = rf.MyClass;
 
 		// If actual class is NULL, end with error - this should not happen
-		if (actualClass == null) {
+		/*if (actualClass == null) {
 			System.err.println("NO GROUND TRUTH");
 			System.exit(1);
 			return "";
-		}
+		}*/
 
 		// run actual classification
 		Prediction p = rf.runClassification();
