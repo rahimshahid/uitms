@@ -1,0 +1,4 @@
+#Thu Feb 01 21:17:16 PKT 2018
+base.0=E\:\\AndroidProjects\\DataCollection\\uitms\\build\\intermediates\\transforms\\dexMerger\\debug\\5
+renamed.0=classes.dex
+file.0=E\:\\AndroidProjects\\DataCollection\\uitms\\build\\intermediates\\transforms\\dexMerger\\debug\\5\\classes.dex
