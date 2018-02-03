@@ -1,1 +1,1 @@
-include ':app', ':opencsv'
+include ':app', ':opencsv', ':uitms'

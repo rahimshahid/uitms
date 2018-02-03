@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://E:\AndroidProjects\DataCollection\fyp.iml" filepath="E:\AndroidProjects\DataCollection\fyp.iml" />
       <module fileurl="file://$PROJECT_DIR$/opencsv/opencsv.iml" filepath="$PROJECT_DIR$/opencsv/opencsv.iml" />
+      <module fileurl="file://$PROJECT_DIR$/uitms/uitms.iml" filepath="$PROJECT_DIR$/uitms/uitms.iml" />
     </modules>
   </component>
 </project>
