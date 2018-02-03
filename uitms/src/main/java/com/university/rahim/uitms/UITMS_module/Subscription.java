@@ -1,11 +1,13 @@
 package com.university.rahim.uitms.UITMS_module;
 
+import android.app.Application;
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.university.rahim.uitms.UITMS_module.Classifier.ModelRandomForest;
 import com.university.rahim.uitms.UITMS_module.Classifier.RandomForest;
@@ -22,18 +24,18 @@ import static com.university.rahim.uitms.UITMS_module.Classifier.Evaluate.evalCl
  */
 
 public class Subscription implements SensorEventListener {
-    private static final String TAG = "dbg_UITMS_Subscription";
+    private static final String TAG = "DBG_UITMSsubscription";
     private TapDetector tapDetector;
     private SensorManager sensorManager;
     private static RandomForest rf;
-    private Context context;
+    private TapListener tapListener;
 
     //TODO
     public static double []arrg = null;
 
 
-    private Subscription(Context context, TapDetector.Callback listener){
-        this.context = context;
+    private Subscription(Context context, TapListener tapListener,TapDetector.Callback listener){
+        this.tapListener = tapListener;
         sensorManager=(SensorManager) context.getSystemService(SENSOR_SERVICE);
         sensorManager.registerListener(this,
                 sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
@@ -49,8 +51,8 @@ public class Subscription implements SensorEventListener {
         sensorManager.unregisterListener(this);
     }
 
-    public static Subscription subscribe(Context context) {
-        return new Subscription(context, new TapDetector.Callback() {
+    public static Subscription subscribe(Context context, final TapListener tapListener) {
+        return new Subscription(context, tapListener, new TapDetector.Callback() {
             @Override
             public void tapDetected() {
                 //Log.d(TAG, "tapDetected: ");
@@ -73,7 +75,15 @@ public class Subscription implements SensorEventListener {
 
                 try {
                     String res = evalClassifier(rf, wav);
-                    Log.d(TAG, "result: " + res);
+                    //Log.d(TAG, "result: " + res);
+                    if (res.contains("Left"))
+                        tapListener.onTap(TapListener.DIRECTION.LEFT);
+                    else if (res.contains("Right"))
+                        tapListener.onTap(TapListener.DIRECTION.RIGHT);
+                    else if (res.contains("Up"))
+                        tapListener.onTap(TapListener.DIRECTION.TOP);
+                    else if (res.contains("Down"))
+                        tapListener.onTap(TapListener.DIRECTION.BOTTOM);
                 }
                 catch (Exception e){
                     Log.d(TAG, "run: " + e.toString());
@@ -92,5 +102,10 @@ public class Subscription implements SensorEventListener {
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
 
+    }
+
+    public interface TapListener {
+        enum DIRECTION{LEFT, RIGHT, TOP, BOTTOM};
+        void onTap(DIRECTION dir);
     }
 }
