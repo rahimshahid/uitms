@@ -3,76 +3,88 @@ package com.university.rahim.datacollection.Ui;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.media.AudioFormat;
-import android.media.AudioRecord;
-import android.media.MediaRecorder;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 import com.university.rahim.datacollection.R;
+import com.university.rahim.datacollection.Utils.AudioRecorder;
 
 
 public class MicActivity extends AppCompatActivity {
     private static final String TAG = "dbg_MicActivity";
-    private int audioSource = MediaRecorder.AudioSource.MIC;
-    private static int sampleRateInHz = 48000;
-    private static int channelConfig = AudioFormat.CHANNEL_IN_STEREO;
-    private static int audioFormat = AudioFormat.ENCODING_PCM_16BIT;
-    private int bufferSize = 0;
-    int readSize = 0;
-    GraphView graph_left, graph_right;
+    AudioRecorder rec;
+
+    GraphView graph;
     LineGraphSeries<DataPoint> series_left = new LineGraphSeries<DataPoint>(new DataPoint[] {});
     LineGraphSeries<DataPoint> series_right = new LineGraphSeries<DataPoint>(new DataPoint[] {});
-    double time_left = 0d;
-    double time_right = 0d;
+    double time = 0d;
+    int count = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mic);
         initView();
-
-        int bufferRead = 0;
-        bufferSize = AudioRecord.getMinBufferSize(sampleRateInHz,
-                channelConfig, audioFormat);
-        AudioRecord audioRecord = new AudioRecord(audioSource,
-                sampleRateInHz, channelConfig, audioFormat,
-                bufferSize);
-        audioRecord.startRecording();
-        new Handler().postDelayed(() -> next(audioRecord),100);
-
-        Log.d(TAG, "onCreate: " + audioRecord);
+        rec = new AudioRecorder();
     }
 
-    void next(AudioRecord audioRecord) {
-        audioRecord.stop();
-        short[] audiodata = new short[bufferSize];
-        readSize = audioRecord.read(audiodata,0,bufferSize);
+    @Override
+    protected void onResume() {
+        super.onResume();
+        rec.recordAudio(new AudioRecorder.AudiRecorderListener() {
+            @Override
+            public void getSamples(short[] arr, int channelConfig) {
+                MicActivity.this.runOnUiThread(new Runnable() {
+                    public void run() {
+                        if (channelConfig == AudioFormat.CHANNEL_IN_STEREO)
+                            MicActivity.this.updateGraphStereo(arr);
+                        else
+                            MicActivity.this.updateGraphMono(arr);
+                    }
+                });
+            }
+        });
+    }
 
-        short[] leftChannelAudioData = new short[readSize/2];
-        short[] rightChannelAudioData = new short[readSize/2];
-        for(int i = 0; i < readSize/2; i = i + 2)
-        {
-            leftChannelAudioData[i] = audiodata[2*i];
-            leftChannelAudioData[i+1] = audiodata[2*i+1];
-            rightChannelAudioData[i] =  audiodata[2*i+2];
-            rightChannelAudioData[i+1] = audiodata[2*i+3];
-        }
-        for (int i=0; i<leftChannelAudioData.length; i++){
-            updateGraphLeft(leftChannelAudioData[i]);
-        }
-        for (int i=0; i<rightChannelAudioData.length; i++){
-            updateGraphRight(rightChannelAudioData[i]);
-        }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        rec.stopRecording();
     }
 
     void initView() {
-        graph_left = (GraphView) findViewById(R.id.graph_left);
-        graph_right = (GraphView) findViewById(R.id.graph_right);
+        graph = (GraphView) findViewById(R.id.graph);
+
+        ((Button)findViewById(R.id.recordingButton)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Button self = ((Button)findViewById(R.id.recordingButton));
+                if (self.getText().charAt(0) == 'P') {
+                    MicActivity.this.rec.stopRecording();
+                    self.setText("Resume");
+                } else {
+                    rec.recordAudio(new AudioRecorder.AudiRecorderListener() {
+                        @Override
+                        public void getSamples(short[] arr, int channelConfig) {
+                            MicActivity.this.runOnUiThread(new Runnable() {
+                                public void run() {
+                                    if (channelConfig == AudioFormat.CHANNEL_IN_STEREO)
+                                        MicActivity.this.updateGraphStereo(arr);
+                                    else
+                                        MicActivity.this.updateGraphMono(arr);
+                                }
+                            });
+                        }
+                    });
+                    self.setText("Pause");
+                }
+            }
+        });
 
         Paint paint = new Paint();
         paint.setColor(getResources().getColor(R.color.colorRed));
@@ -90,27 +102,37 @@ public class MicActivity extends AppCompatActivity {
         series_right.setCustomPaint(paint);
         series_right.setTitle("RIGHT");
 
-        graph_left.addSeries(series_left);
-        graph_right.addSeries(series_right);
-        //graph_left.getViewport().setXAxisBoundsManual(true);
-        //graph_left.getViewport().setXAxisBoundsManual(true);
+        graph.addSeries(series_left);
+        graph.addSeries(series_right);
+
+        graph.getViewport().setXAxisBoundsManual(true);
+        graph.getViewport().setYAxisBoundsManual(true);
+        graph.getViewport().setMaxX(time + 40);
+        graph.getViewport().setMinX(time);
+        graph.getViewport().setMinY(0);
+        graph.getViewport().setMaxY(1000);
     }
 
-    private void updateGraphLeft(short left) {
-        //graph_left.getViewport().setMinX(time_left - 10);
-        //graph_left.getViewport().setMaxX(time_left + 50);
-
-        series_left.appendData(new DataPoint(time_left, left), true, bufferSize);
-        graph_left.onDataChanged(true, true);
-        time_left++;
+    private void updateGraphStereo(short[] arr) {
+        short[] leftChannelAudioData = new short[arr.length/2];
+        short[] rightChannelAudioData = new short[arr.length/2];
+        for(int i = 0; i < arr.length/2; i = i + 2)
+        {
+            leftChannelAudioData[i] = arr[2*i];
+            rightChannelAudioData[i+1] = arr
+                    [2*i+1];
+        }
+        series_left.appendData(new DataPoint(time, AudioRecorder.getMax(leftChannelAudioData)), true, 50);
+        series_right.appendData(new DataPoint(time, AudioRecorder.getMax(rightChannelAudioData)), true, 50);
+        time += 1d;
+        graph.onDataChanged(true, true);
+        count = 0;
     }
 
-    private void updateGraphRight(short right) {
-        //graph_right.getViewport().setMinX(time_right - 10);
-        //graph_right.getViewport().setMaxX(time_right + 50);
-
-        series_right.appendData(new DataPoint(time_right, right), true, bufferSize);
-        graph_right.onDataChanged(true, true);
-        time_right++;
+    private void updateGraphMono(short[] arr) {
+        series_left.appendData(new DataPoint(time, AudioRecorder.getMax(arr)), true, 50);
+        time += 1d;
+        graph.onDataChanged(true, true);
+        count = 0;
     }
 }
