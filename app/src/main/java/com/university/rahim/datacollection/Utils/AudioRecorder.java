@@ -17,7 +17,7 @@ import java.util.List;
 public class AudioRecorder {
     private static final String LOG_TAG = "dbg_AudioRecorder";
     private int audioSource = MediaRecorder.AudioSource.MIC;
-    private static int sampleRateInHz = 8000;
+    private static int sampleRateInHz = 192000;
     private static int channelConfig = AudioFormat.CHANNEL_IN_STEREO;
     private static int audioFormat = AudioFormat.ENCODING_PCM_16BIT;
     private int bufferSize = 0;
@@ -93,5 +93,9 @@ public class AudioRecorder {
 
     public interface AudiRecorderListener {
         void getSamples(short[] arr, int channelConfig);
+    }
+
+    public int getSamplingRate() {
+        return sampleRateInHz;
     }
 }

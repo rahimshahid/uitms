@@ -19,6 +19,7 @@ import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 import com.university.rahim.datacollection.R;
+import com.university.rahim.datacollection.Utils.AudioProcessor;
 import com.university.rahim.datacollection.Utils.CSVHandler;
 import com.university.rahim.datacollection.Utils.SensorValue;
 import com.university.rahim.datacollection.Utils.TapDetector;
@@ -37,6 +38,7 @@ public class SensorActivity extends AppCompatActivity implements SensorEventList
     TapDetector tapDetector;
     CSVHandler csvHandler;
     int direction;           //1: Above, 2:Below, 3:Left, 4:Right...
+    AudioProcessor audioP;
 
     LineGraphSeries<DataPoint> series_x = new LineGraphSeries<DataPoint>(new DataPoint[] {});
     LineGraphSeries<DataPoint> series_y = new LineGraphSeries<DataPoint>(new DataPoint[] {});
@@ -66,6 +68,9 @@ public class SensorActivity extends AppCompatActivity implements SensorEventList
 
         // Created a TapDetector
         tapDetector = new TapDetector(this, 40, 0.1, 0.9, 1, 250);
+        audioP = new AudioProcessor();
+        audioP.startRecording();
+
         this.initView();
     }
 
@@ -73,6 +78,7 @@ public class SensorActivity extends AppCompatActivity implements SensorEventList
     protected void onPause() {
         super.onPause();
         sensorManager.unregisterListener(this);
+        audioP.stopRecording();
     }
 
     @Override
@@ -194,6 +200,7 @@ public class SensorActivity extends AppCompatActivity implements SensorEventList
 
     @Override
     public void tapDetected() {
+        audioP.retrieveTapInfo();
         this.findViewById(R.id.bt_stable).setVisibility(View.GONE);
         this.findViewById(R.id.bt_moving).setVisibility(View.GONE);
         this.findViewById(R.id.bt_tap).setVisibility(View.VISIBLE);

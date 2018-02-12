@@ -3,6 +3,7 @@ package com.university.rahim.datacollection.Ui;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.media.AudioFormat;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +13,7 @@ import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 import com.university.rahim.datacollection.R;
+import com.university.rahim.datacollection.Utils.AudioProcessor;
 import com.university.rahim.datacollection.Utils.AudioRecorder;
 
 
@@ -31,11 +33,17 @@ public class MicActivity extends AppCompatActivity {
         setContentView(R.layout.activity_mic);
         initView();
         rec = new AudioRecorder();
+        /*
+        AudioProcessor p = new AudioProcessor();
+        p.startRecording();
+        new Handler().postDelayed(() -> p.stopRecording(),1000);
+        */
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+
         rec.recordAudio(new AudioRecorder.AudiRecorderListener() {
             @Override
             public void getSamples(short[] arr, int channelConfig) {
@@ -49,6 +57,7 @@ public class MicActivity extends AppCompatActivity {
                 });
             }
         });
+
     }
 
     @Override
@@ -119,8 +128,7 @@ public class MicActivity extends AppCompatActivity {
         for(int i = 0; i < arr.length/2; i = i + 2)
         {
             leftChannelAudioData[i] = arr[2*i];
-            rightChannelAudioData[i+1] = arr
-                    [2*i+1];
+            rightChannelAudioData[i] = arr[2*i+1];
         }
         series_left.appendData(new DataPoint(time, AudioRecorder.getMax(leftChannelAudioData)), true, 50);
         series_right.appendData(new DataPoint(time, AudioRecorder.getMax(rightChannelAudioData)), true, 50);
