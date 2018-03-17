@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from D:\Dropbox\Projects\AndroidProjects\fyp\uitms\src\main\AndroidManifest.xml:2:1-21:12
-INJECTED from D:\Dropbox\Projects\AndroidProjects\fyp\uitms\src\main\AndroidManifest.xml:2:1-21:12
-INJECTED from D:\Dropbox\Projects\AndroidProjects\fyp\uitms\src\main\AndroidManifest.xml:2:1-21:12
-INJECTED from D:\Dropbox\Projects\AndroidProjects\fyp\uitms\src\main\AndroidManifest.xml:2:1-21:12
+ADDED from D:\Dropbox\Projects\AndroidProjects\fyp\uitms\src\main\AndroidManifest.xml:2:1-23:12
+INJECTED from D:\Dropbox\Projects\AndroidProjects\fyp\uitms\src\main\AndroidManifest.xml:2:1-23:12
+INJECTED from D:\Dropbox\Projects\AndroidProjects\fyp\uitms\src\main\AndroidManifest.xml:2:1-23:12
+INJECTED from D:\Dropbox\Projects\AndroidProjects\fyp\uitms\src\main\AndroidManifest.xml:2:1-23:12
 MERGED from [com.android.support:appcompat-v7:26.1.0] C:\Users\rahim\.gradle\caches\transforms-1\files-1.1\appcompat-v7-26.1.0.aar\07161a58f9fefd3b9436faff2bbb5c39\AndroidManifest.xml:17:1-31:12
 MERGED from [com.android.support.constraint:constraint-layout:1.0.2] C:\Users\rahim\.gradle\caches\transforms-1\files-1.1\constraint-layout-1.0.2.aar\86516318b3455e99b59b17d2f2b57fb3\AndroidManifest.xml:2:1-11:12
 MERGED from [com.android.support:animated-vector-drawable:26.1.0] C:\Users\rahim\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-26.1.0.aar\4218ebc211e9e5abda9d4ae616750b1d\AndroidManifest.xml:17:1-28:12
@@ -15,25 +15,29 @@ MERGED from [com.android.support:support-core-utils:26.1.0] C:\Users\rahim\.grad
 MERGED from [com.android.support:support-core-ui:26.1.0] C:\Users\rahim\.gradle\caches\transforms-1\files-1.1\support-core-ui-26.1.0.aar\6965e8b4e76da1ab1e09f6e3c1d516dd\AndroidManifest.xml:17:1-31:12
 MERGED from [com.android.support:support-compat:26.1.0] C:\Users\rahim\.gradle\caches\transforms-1\files-1.1\support-compat-26.1.0.aar\ea63e31b12ecd46ddd5f953d332f287f\AndroidManifest.xml:17:1-31:12
 MERGED from [android.arch.lifecycle:runtime:1.0.0] C:\Users\rahim\.gradle\caches\transforms-1\files-1.1\runtime-1.0.0.aar\40ef3a83e76aa1000a69533de01de370\AndroidManifest.xml:17:1-30:12
-INJECTED from D:\Dropbox\Projects\AndroidProjects\fyp\uitms\src\main\AndroidManifest.xml:2:1-21:12
-INJECTED from D:\Dropbox\Projects\AndroidProjects\fyp\uitms\src\main\AndroidManifest.xml:2:1-21:12
-INJECTED from D:\Dropbox\Projects\AndroidProjects\fyp\uitms\src\main\AndroidManifest.xml:2:1-21:12
+INJECTED from D:\Dropbox\Projects\AndroidProjects\fyp\uitms\src\main\AndroidManifest.xml:2:1-23:12
+INJECTED from D:\Dropbox\Projects\AndroidProjects\fyp\uitms\src\main\AndroidManifest.xml:2:1-23:12
+INJECTED from D:\Dropbox\Projects\AndroidProjects\fyp\uitms\src\main\AndroidManifest.xml:2:1-23:12
 	package
 		ADDED from D:\Dropbox\Projects\AndroidProjects\fyp\uitms\src\main\AndroidManifest.xml:3:5-41
 		INJECTED from D:\Dropbox\Projects\AndroidProjects\fyp\uitms\src\main\AndroidManifest.xml
 		INJECTED from D:\Dropbox\Projects\AndroidProjects\fyp\uitms\src\main\AndroidManifest.xml
 	android:versionName
 		INJECTED from D:\Dropbox\Projects\AndroidProjects\fyp\uitms\src\main\AndroidManifest.xml
-		ADDED from D:\Dropbox\Projects\AndroidProjects\fyp\uitms\src\main\AndroidManifest.xml:2:1-21:12
+		ADDED from D:\Dropbox\Projects\AndroidProjects\fyp\uitms\src\main\AndroidManifest.xml:2:1-23:12
 		INJECTED from D:\Dropbox\Projects\AndroidProjects\fyp\uitms\src\main\AndroidManifest.xml
 	android:versionCode
 		INJECTED from D:\Dropbox\Projects\AndroidProjects\fyp\uitms\src\main\AndroidManifest.xml
-		ADDED from D:\Dropbox\Projects\AndroidProjects\fyp\uitms\src\main\AndroidManifest.xml:2:1-21:12
+		ADDED from D:\Dropbox\Projects\AndroidProjects\fyp\uitms\src\main\AndroidManifest.xml:2:1-23:12
 		INJECTED from D:\Dropbox\Projects\AndroidProjects\fyp\uitms\src\main\AndroidManifest.xml
 	xmlns:android
 		ADDED from D:\Dropbox\Projects\AndroidProjects\fyp\uitms\src\main\AndroidManifest.xml:2:11-69
+uses-permission#android.permission.RECORD_AUDIO
+ADDED from D:\Dropbox\Projects\AndroidProjects\fyp\uitms\src\main\AndroidManifest.xml:4:5-71
+	android:name
+		ADDED from D:\Dropbox\Projects\AndroidProjects\fyp\uitms\src\main\AndroidManifest.xml:4:22-68
 application
-ADDED from D:\Dropbox\Projects\AndroidProjects\fyp\uitms\src\main\AndroidManifest.xml:5:5-19:19
+ADDED from D:\Dropbox\Projects\AndroidProjects\fyp\uitms\src\main\AndroidManifest.xml:7:5-21:19
 MERGED from [com.android.support:appcompat-v7:26.1.0] C:\Users\rahim\.gradle\caches\transforms-1\files-1.1\appcompat-v7-26.1.0.aar\07161a58f9fefd3b9436faff2bbb5c39\AndroidManifest.xml:25:5-29:19
 MERGED from [com.android.support:appcompat-v7:26.1.0] C:\Users\rahim\.gradle\caches\transforms-1\files-1.1\appcompat-v7-26.1.0.aar\07161a58f9fefd3b9436faff2bbb5c39\AndroidManifest.xml:25:5-29:19
 MERGED from [com.android.support.constraint:constraint-layout:1.0.2] C:\Users\rahim\.gradle\caches\transforms-1\files-1.1\constraint-layout-1.0.2.aar\86516318b3455e99b59b17d2f2b57fb3\AndroidManifest.xml:9:5-20
@@ -57,31 +61,31 @@ MERGED from [com.android.support:support-compat:26.1.0] C:\Users\rahim\.gradle\c
 MERGED from [android.arch.lifecycle:runtime:1.0.0] C:\Users\rahim\.gradle\caches\transforms-1\files-1.1\runtime-1.0.0.aar\40ef3a83e76aa1000a69533de01de370\AndroidManifest.xml:24:5-28:19
 MERGED from [android.arch.lifecycle:runtime:1.0.0] C:\Users\rahim\.gradle\caches\transforms-1\files-1.1\runtime-1.0.0.aar\40ef3a83e76aa1000a69533de01de370\AndroidManifest.xml:24:5-28:19
 	android:supportsRtl
-		ADDED from D:\Dropbox\Projects\AndroidProjects\fyp\uitms\src\main\AndroidManifest.xml:10:9-35
+		ADDED from D:\Dropbox\Projects\AndroidProjects\fyp\uitms\src\main\AndroidManifest.xml:12:9-35
 	android:label
-		ADDED from D:\Dropbox\Projects\AndroidProjects\fyp\uitms\src\main\AndroidManifest.xml:8:9-41
+		ADDED from D:\Dropbox\Projects\AndroidProjects\fyp\uitms\src\main\AndroidManifest.xml:10:9-41
 	android:roundIcon
-		ADDED from D:\Dropbox\Projects\AndroidProjects\fyp\uitms\src\main\AndroidManifest.xml:9:9-54
+		ADDED from D:\Dropbox\Projects\AndroidProjects\fyp\uitms\src\main\AndroidManifest.xml:11:9-54
 	android:icon
-		ADDED from D:\Dropbox\Projects\AndroidProjects\fyp\uitms\src\main\AndroidManifest.xml:7:9-43
+		ADDED from D:\Dropbox\Projects\AndroidProjects\fyp\uitms\src\main\AndroidManifest.xml:9:9-43
 	android:allowBackup
-		ADDED from D:\Dropbox\Projects\AndroidProjects\fyp\uitms\src\main\AndroidManifest.xml:6:9-35
+		ADDED from D:\Dropbox\Projects\AndroidProjects\fyp\uitms\src\main\AndroidManifest.xml:8:9-35
 	android:theme
-		ADDED from D:\Dropbox\Projects\AndroidProjects\fyp\uitms\src\main\AndroidManifest.xml:11:9-40
+		ADDED from D:\Dropbox\Projects\AndroidProjects\fyp\uitms\src\main\AndroidManifest.xml:13:9-40
 activity#com.university.rahim.uitms.MainActivity
-ADDED from D:\Dropbox\Projects\AndroidProjects\fyp\uitms\src\main\AndroidManifest.xml:12:9-18:20
+ADDED from D:\Dropbox\Projects\AndroidProjects\fyp\uitms\src\main\AndroidManifest.xml:14:9-20:20
 	android:name
-		ADDED from D:\Dropbox\Projects\AndroidProjects\fyp\uitms\src\main\AndroidManifest.xml:12:19-47
+		ADDED from D:\Dropbox\Projects\AndroidProjects\fyp\uitms\src\main\AndroidManifest.xml:14:19-47
 intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
-ADDED from D:\Dropbox\Projects\AndroidProjects\fyp\uitms\src\main\AndroidManifest.xml:13:13-17:29
+ADDED from D:\Dropbox\Projects\AndroidProjects\fyp\uitms\src\main\AndroidManifest.xml:15:13-19:29
 action#android.intent.action.MAIN
-ADDED from D:\Dropbox\Projects\AndroidProjects\fyp\uitms\src\main\AndroidManifest.xml:14:17-69
+ADDED from D:\Dropbox\Projects\AndroidProjects\fyp\uitms\src\main\AndroidManifest.xml:16:17-69
 	android:name
-		ADDED from D:\Dropbox\Projects\AndroidProjects\fyp\uitms\src\main\AndroidManifest.xml:14:25-66
+		ADDED from D:\Dropbox\Projects\AndroidProjects\fyp\uitms\src\main\AndroidManifest.xml:16:25-66
 category#android.intent.category.LAUNCHER
-ADDED from D:\Dropbox\Projects\AndroidProjects\fyp\uitms\src\main\AndroidManifest.xml:16:17-77
+ADDED from D:\Dropbox\Projects\AndroidProjects\fyp\uitms\src\main\AndroidManifest.xml:18:17-77
 	android:name
-		ADDED from D:\Dropbox\Projects\AndroidProjects\fyp\uitms\src\main\AndroidManifest.xml:16:27-74
+		ADDED from D:\Dropbox\Projects\AndroidProjects\fyp\uitms\src\main\AndroidManifest.xml:18:27-74
 uses-sdk
 INJECTED from D:\Dropbox\Projects\AndroidProjects\fyp\uitms\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from D:\Dropbox\Projects\AndroidProjects\fyp\uitms\src\main\AndroidManifest.xml

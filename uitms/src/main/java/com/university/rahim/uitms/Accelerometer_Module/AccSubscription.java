@@ -21,7 +21,7 @@ import static com.university.rahim.uitms.Accelerometer_Module.Classifier.Evaluat
  * Created by RAHIM on 1/25/2018.
  */
 
-public class Subscription implements SensorEventListener {
+public class AccSubscription implements SensorEventListener {
     private static final String TAG = "DBG_UITMSsubscription";
     private TapDetector tapDetector;
     private SensorManager sensorManager;
@@ -32,7 +32,7 @@ public class Subscription implements SensorEventListener {
     public static double []arrg = null;
 
 
-    private Subscription(Context context, TapListener tapListener,TapDetector.Callback listener){
+    private AccSubscription(Context context, TapListener tapListener, TapDetector.Callback listener){
         this.tapListener = tapListener;
         sensorManager=(SensorManager) context.getSystemService(SENSOR_SERVICE);
         sensorManager.registerListener(this,
@@ -49,8 +49,8 @@ public class Subscription implements SensorEventListener {
         sensorManager.unregisterListener(this);
     }
 
-    public static Subscription subscribe(Context context, final TapListener tapListener) {
-        return new Subscription(context, tapListener, new TapDetector.Callback() {
+    public static AccSubscription subscribe(Context context, final TapListener tapListener) {
+        return new AccSubscription(context, tapListener, new TapDetector.Callback() {
             @Override
             public void tapDetected() {
                 //Log.d(TAG, "tapDetected: ");

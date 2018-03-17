@@ -5,12 +5,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-import com.university.rahim.uitms.Accelerometer_Module.Subscription;
+import com.university.rahim.uitms.Accelerometer_Module.AccSubscription;
+import com.university.rahim.uitms.Microphone_Module.AudioClassifier;
 
 public class
 MainActivity extends AppCompatActivity {
     private static final String TAG = "DBG_mainActivity";
-    Subscription tapDetectorSub = null;
+    AccSubscription tapDetectorSub = null;
+
+    //TODO
+    AudioClassifier ac = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,9 +25,18 @@ MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        tapDetectorSub = Subscription.subscribe(this, new Subscription.TapListener() {
+
+        //TODO
+        if(ac == null){
+            ac = new AudioClassifier();
+        }
+        ac.start();
+
+        tapDetectorSub = AccSubscription.subscribe(this, new AccSubscription.TapListener() {
             @Override
-            public void onTap(Subscription.TapListener.DIRECTION dir) {
+            public void onTap(AccSubscription.TapListener.DIRECTION dir) {
+                // TODO
+                ac.onTapDetected();
                 UiOnTapDetected(dir);
             }
         });
@@ -35,22 +48,26 @@ MainActivity extends AppCompatActivity {
         super.onPause();
         tapDetectorSub.unsubscribe();
         tapDetectorSub = null;
+
+        //TODO
+        ac.pause();
+        ac = null;
     }
 
-    void UiOnTapDetected(Subscription.TapListener.DIRECTION dir) {
-        if (dir == Subscription.TapListener.DIRECTION.RIGHT) {
+    void UiOnTapDetected(AccSubscription.TapListener.DIRECTION dir) {
+        if (dir == AccSubscription.TapListener.DIRECTION.RIGHT) {
             this.findViewById(R.id.bt_stableRight).setVisibility(View.GONE);
             this.findViewById(R.id.bt_tapRight).setVisibility(View.VISIBLE);
         }
-        else if (dir == Subscription.TapListener.DIRECTION.LEFT) {
+        else if (dir == AccSubscription.TapListener.DIRECTION.LEFT) {
             this.findViewById(R.id.bt_stableLeft).setVisibility(View.GONE);
             this.findViewById(R.id.bt_tapLeft).setVisibility(View.VISIBLE);
         }
-        else if (dir == Subscription.TapListener.DIRECTION.BOTTOM) {
+        else if (dir == AccSubscription.TapListener.DIRECTION.BOTTOM) {
             this.findViewById(R.id.bt_stableBottom).setVisibility(View.GONE);
             this.findViewById(R.id.bt_tapBottom).setVisibility(View.VISIBLE);
         }
-        else if (dir == Subscription.TapListener.DIRECTION.TOP) {
+        else if (dir == AccSubscription.TapListener.DIRECTION.TOP) {
             this.findViewById(R.id.bt_stableTop).setVisibility(View.GONE);
             this.findViewById(R.id.bt_tapTop).setVisibility(View.VISIBLE);
         }
