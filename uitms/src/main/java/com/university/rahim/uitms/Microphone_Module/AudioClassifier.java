@@ -43,6 +43,13 @@ public class AudioClassifier {
                 left = LeftMicMagnification * AudioProcessor.getMaxLeft(mem);
                 right = AudioProcessor.getMaxRight(mem);
                 Log.d(TAG, "onTapDetected: Top: " + left + ", Bottom: " + right);
+                
+                if (Math.abs(left) + Math.abs(right) < 12000){
+                    Log.d(TAG, "run: LEFT !!");
+                } else {
+                    Log.d(TAG, "run: RIGHT !!");
+                }
+                
                 if (Math.abs(left) >= Math.abs(right)) {
                     Log.d(TAG, "run: TOP !!");
                 } else {
