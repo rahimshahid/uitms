@@ -3,11 +3,9 @@ package com.university.rahim.uitms;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
-import com.university.rahim.uitms.UITMS_module.Subscription;
+import com.university.rahim.uitms.Accelerometer_Module.Subscription;
 
 public class
 MainActivity extends AppCompatActivity {
@@ -26,7 +24,7 @@ MainActivity extends AppCompatActivity {
         tapDetectorSub = Subscription.subscribe(this, new Subscription.TapListener() {
             @Override
             public void onTap(Subscription.TapListener.DIRECTION dir) {
-                tapDetected(dir);
+                UiOnTapDetected(dir);
             }
         });
 
@@ -39,7 +37,7 @@ MainActivity extends AppCompatActivity {
         tapDetectorSub = null;
     }
 
-    void tapDetected(Subscription.TapListener.DIRECTION dir) {
+    void UiOnTapDetected(Subscription.TapListener.DIRECTION dir) {
         if (dir == Subscription.TapListener.DIRECTION.RIGHT) {
             this.findViewById(R.id.bt_stableRight).setVisibility(View.GONE);
             this.findViewById(R.id.bt_tapRight).setVisibility(View.VISIBLE);
@@ -60,12 +58,12 @@ MainActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                resetTapStateAll();
+                resetTapStateUiAll();
             }
         }, 250);
     }
 
-    private void resetTapStateAll() {
+    private void resetTapStateUiAll() {
         MainActivity.this.findViewById(R.id.bt_stableRight).setVisibility(View.VISIBLE);
         MainActivity.this.findViewById(R.id.bt_tapRight).setVisibility(View.GONE);
 

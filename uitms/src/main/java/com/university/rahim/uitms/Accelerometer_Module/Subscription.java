@@ -1,23 +1,21 @@
-package com.university.rahim.uitms.UITMS_module;
+package com.university.rahim.uitms.Accelerometer_Module;
 
-import android.app.Application;
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.university.rahim.uitms.UITMS_module.Classifier.ModelRandomForest;
-import com.university.rahim.uitms.UITMS_module.Classifier.RandomForest;
-import com.university.rahim.uitms.UITMS_module.Detector.SensorValue;
-import com.university.rahim.uitms.UITMS_module.Detector.TapDetector;
+import com.university.rahim.uitms.Accelerometer_Module.Classifier.ModelRandomForest;
+import com.university.rahim.uitms.Accelerometer_Module.Classifier.RandomForest;
+import com.university.rahim.uitms.Accelerometer_Module.Detector.SensorValue;
+import com.university.rahim.uitms.Accelerometer_Module.Detector.TapDetector;
 
 import java.util.ArrayList;
 
 import static android.content.Context.SENSOR_SERVICE;
-import static com.university.rahim.uitms.UITMS_module.Classifier.Evaluate.evalClassifier;
+import static com.university.rahim.uitms.Accelerometer_Module.Classifier.Evaluate.evalClassifier;
 
 /**
  * Created by RAHIM on 1/25/2018.

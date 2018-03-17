@@ -1,6 +1,4 @@
-package com.university.rahim.uitms.UITMS_module.Classifier;
-
-import com.university.rahim.uitms.UITMS_module.Classifier.Prediction;
+package com.university.rahim.uitms.Accelerometer_Module.Classifier;
 
 import java.util.ArrayList;
 import java.util.HashMap;

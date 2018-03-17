@@ -1,4 +1,4 @@
-package com.university.rahim.uitms.UITMS_module.Classifier;
+package com.university.rahim.uitms.Accelerometer_Module.Classifier;
 
 /**
  * This class encapsulates the prediction returned by the Random Forest classifier

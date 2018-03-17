@@ -1,10 +1,5 @@
-package com.university.rahim.uitms.UITMS_module.Classifier;
+package com.university.rahim.uitms.Accelerometer_Module.Classifier;
 
-import android.util.Log;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.lang.reflect.Field;
 
 /**

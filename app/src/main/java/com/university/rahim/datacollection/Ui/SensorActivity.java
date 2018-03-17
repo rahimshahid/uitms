@@ -1,6 +1,5 @@
 package com.university.rahim.datacollection.Ui;
 
-import android.content.Intent;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.hardware.Sensor;
@@ -19,9 +18,7 @@ import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 import com.university.rahim.datacollection.R;
-import com.university.rahim.datacollection.Utils.AudioProcessor;
 import com.university.rahim.datacollection.Utils.CSVHandler;
-import com.university.rahim.datacollection.Utils.SensorValue;
 import com.university.rahim.datacollection.Utils.TapDetector;
 
 import java.util.ArrayList;
@@ -38,12 +35,13 @@ public class SensorActivity extends AppCompatActivity implements SensorEventList
     TapDetector tapDetector;
     CSVHandler csvHandler;
     int direction;           //1: Above, 2:Below, 3:Left, 4:Right...
-    AudioProcessor audioP;
 
     LineGraphSeries<DataPoint> series_x = new LineGraphSeries<DataPoint>(new DataPoint[] {});
     LineGraphSeries<DataPoint> series_y = new LineGraphSeries<DataPoint>(new DataPoint[] {});
     LineGraphSeries<DataPoint> series_z = new LineGraphSeries<DataPoint>(new DataPoint[] {});
     double time = 0d;
+
+    AudioClassifier micDataGraph;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,17 +66,29 @@ public class SensorActivity extends AppCompatActivity implements SensorEventList
 
         // Created a TapDetector
         tapDetector = new TapDetector(this, 40, 0.1, 0.9, 1, 250);
-        audioP = new AudioProcessor();
-        audioP.startRecording();
-
+        micDataGraph = new AudioClassifier();
         this.initView();
+
+        /*
+        //TODO: remove this
+        int delay = 0; // delay for 0 sec.
+        int period = 50; // repeat every 500 msec.
+        Timer timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask()
+        {
+            public void run()
+            {
+                micDataGraph.onTapDetected();
+            }
+        }, delay, period);
+        */
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         sensorManager.unregisterListener(this);
-        audioP.stopRecording();
+        micDataGraph.pause();
     }
 
     @Override
@@ -200,7 +210,7 @@ public class SensorActivity extends AppCompatActivity implements SensorEventList
 
     @Override
     public void tapDetected() {
-        audioP.retrieveTapInfo();
+        micDataGraph.onTapDetected();
         this.findViewById(R.id.bt_stable).setVisibility(View.GONE);
         this.findViewById(R.id.bt_moving).setVisibility(View.GONE);
         this.findViewById(R.id.bt_tap).setVisibility(View.VISIBLE);

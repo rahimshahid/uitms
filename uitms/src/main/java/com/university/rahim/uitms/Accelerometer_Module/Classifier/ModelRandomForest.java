@@ -1,6 +1,6 @@
 
 
-package com.university.rahim.uitms.UITMS_module.Classifier;
+package com.university.rahim.uitms.Accelerometer_Module.Classifier;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.university.rahim.uitms.UITMS_module.Detector;
+package com.university.rahim.uitms.Accelerometer_Module.Detector;
 
 import java.util.ArrayList;
 

@@ -1,14 +1,10 @@
 package com.university.rahim.datacollection.Utils;
 
 import android.media.AudioFormat;
-import android.os.Handler;
-import android.os.Looper;
-import android.util.Log;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by RAHIM on 2/12/2018.
@@ -16,17 +12,14 @@ import java.util.List;
 
 public class AudioProcessor implements AudioRecorder.AudiRecorderListener {
     private static final String TAG = "dbg_AudioProcessor";
-
-    private List leftChannelMem;
-    private List rightChannelMem;
     private AudioRecorder recorder = null;
+    private AudioMem mem;
 
     public AudioProcessor() {
         recorder = new AudioRecorder();
         //TODO: decide mem length
-        int memSize = recorder.getSamplingRate() / 4;
-        leftChannelMem =  new LimitedSizeQueue<Integer>(memSize);
-        rightChannelMem = new LimitedSizeQueue<Integer>(memSize);
+        int memSize = recorder.getSamplingRate() / 10;
+        mem = new AudioMem(memSize);
     }
     public void startRecording() {
         if (recorder == null) {
@@ -40,10 +33,8 @@ public class AudioProcessor implements AudioRecorder.AudiRecorderListener {
         }
     }
 
-    public void retrieveTapInfo(){
-        int leftMax = AudioProcessor.getMax(leftChannelMem);
-        int rightMax = AudioProcessor.getMax(rightChannelMem);
-        Log.d(TAG, "retrieveTapInfo: Left: " + leftMax + " Right: " + rightMax);
+    public AudioMem retrieveTapInfo(){
+        return new AudioMem(mem);
     }
 
     @Override
@@ -53,31 +44,40 @@ public class AudioProcessor implements AudioRecorder.AudiRecorderListener {
                 throw new Exception("AudioProcessor->getSamples->Channel configuration not STEREO");
             }
             // The thread that calls this function should be kept free for recording work
-            processAudio(arr);
+            storeAudio(arr);
 
         } catch (Exception e) {
             System.out.println(e.getLocalizedMessage());
         }
     }
 
-    private void processAudio(short[] arr) {
-        short[] leftChannelAudioData = new short[arr.length / 2];
-        short[] rightChannelAudioData = new short[arr.length / 2];
+    private void storeAudio(short[] arr) {
         for (int i = 0; i < arr.length / 2; i = i + 2) {
-            leftChannelAudioData[i] = arr[2 * i];
-            leftChannelMem.add((int) arr[2 * i]);
-            rightChannelAudioData[i] = arr[2 * i + 1];
-            rightChannelMem.add((int) arr[2 * i + 1]);
+            mem.q.add(new AudioValue((int) arr[2 * i], (int) arr[2 * i + 1]));
         }
     }
 
-    public static int getMax(List<Integer> inputArray){
-        int maxValue = inputArray.get(0);
-        for(int i=1;i < inputArray.size();i++){
-            if(Math.abs(inputArray.get(i)) > Math.abs(maxValue)){
-                maxValue = inputArray.get(i);
+    public static int getMaxLeft(AudioMem param){
+        if (param.q.size() <= 0)
+            return -1;
+        int maxValue = param.q.get(0).left;
+        for(int i=1;i < param.q.size();i++){
+            if(Math.abs(param.q.get(i).left) > Math.abs(maxValue)){
+                maxValue = param.q.get(i).left;
             }
         }
         return maxValue;
     }
+    public static int getMaxRight(AudioMem param){
+        if (param.q.size() <= 0)
+            return -1;
+        int maxValue = param.q.get(0).right;
+        for(int i=1;i < param.q.size();i++){
+            if(Math.abs(param.q.get(i).right) > Math.abs(maxValue)){
+                maxValue = param.q.get(i).right;
+            }
+        }
+        return maxValue;
+    }
+
 }

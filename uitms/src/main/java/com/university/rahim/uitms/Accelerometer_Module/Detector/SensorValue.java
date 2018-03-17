@@ -1,4 +1,4 @@
-package com.university.rahim.uitms.UITMS_module.Detector;
+package com.university.rahim.uitms.Accelerometer_Module.Detector;
 
 /**
  * Created by RAHIM on 10/4/2017.

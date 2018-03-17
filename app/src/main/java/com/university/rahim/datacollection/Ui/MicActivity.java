@@ -99,7 +99,6 @@ public class MicActivity extends AppCompatActivity {
         graph.addSeries(series_left);
         graph.addSeries(series_right);
 
-
         graph.getViewport().setMinY(-1000);
         graph.getViewport().setMaxY(1000);
 
