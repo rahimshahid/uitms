@@ -20,7 +20,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".Ui.SensorActivity" />
-        <activity android:name=".Ui.CasualActivity"></activity>
+        <activity android:name=".Ui.CasualActivity" />
+        <activity android:name=".Ui.MicActivity"></activity>
     </application>
 
 </manifest>
