@@ -9,7 +9,8 @@ import android.widget.Toast;
 
 import com.university.rahim.uitms.UITMS_module.Subscription;
 
-public class MainActivity extends AppCompatActivity {
+public class
+MainActivity extends AppCompatActivity {
     private static final String TAG = "DBG_mainActivity";
     Subscription tapDetectorSub = null;
 
