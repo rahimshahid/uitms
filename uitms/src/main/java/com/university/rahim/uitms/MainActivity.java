@@ -1,12 +1,17 @@
 package com.university.rahim.uitms;
 
 import android.os.Handler;
+import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
 import com.university.rahim.uitms.Accelerometer_Module.AccSubscription;
 import com.university.rahim.uitms.Microphone_Module.AudioClassifier;
+
+import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class
 MainActivity extends AppCompatActivity {
@@ -36,8 +41,29 @@ MainActivity extends AppCompatActivity {
             @Override
             public void onTap(AccSubscription.TapListener.DIRECTION dir) {
                 // TODO
-                ac.onTapDetected();
-                UiOnTapDetected(dir);
+                new Timer().schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        ArrayList<String> res = ac.onTapDetected();
+                        for(String e: res){
+                            switch(e) {
+                                case "left":
+                                    UiOnTapDetected(DIRECTION.LEFT);
+                                    break;
+                                case "right":
+                                    UiOnTapDetected(DIRECTION.RIGHT);
+                                    break;
+                                case "top":
+                                    UiOnTapDetected(DIRECTION.TOP);
+                                    break;
+                                case "bottom":
+                                    UiOnTapDetected(DIRECTION.BOTTOM);
+                                    break;
+                            }
+                        }
+                    }
+                }, AudioClassifier.listeningDelay);
+
             }
         });
 
@@ -54,30 +80,38 @@ MainActivity extends AppCompatActivity {
         ac = null;
     }
 
-    void UiOnTapDetected(AccSubscription.TapListener.DIRECTION dir) {
-        if (dir == AccSubscription.TapListener.DIRECTION.RIGHT) {
-            this.findViewById(R.id.bt_stableRight).setVisibility(View.GONE);
-            this.findViewById(R.id.bt_tapRight).setVisibility(View.VISIBLE);
-        }
-        else if (dir == AccSubscription.TapListener.DIRECTION.LEFT) {
-            this.findViewById(R.id.bt_stableLeft).setVisibility(View.GONE);
-            this.findViewById(R.id.bt_tapLeft).setVisibility(View.VISIBLE);
-        }
-        else if (dir == AccSubscription.TapListener.DIRECTION.BOTTOM) {
-            this.findViewById(R.id.bt_stableBottom).setVisibility(View.GONE);
-            this.findViewById(R.id.bt_tapBottom).setVisibility(View.VISIBLE);
-        }
-        else if (dir == AccSubscription.TapListener.DIRECTION.TOP) {
-            this.findViewById(R.id.bt_stableTop).setVisibility(View.GONE);
-            this.findViewById(R.id.bt_tapTop).setVisibility(View.VISIBLE);
-        }
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
+    void UiOnTapDetected(final AccSubscription.TapListener.DIRECTION dir) {
+        MainActivity.this.runOnUiThread(new Runnable() {
             public void run() {
-                resetTapStateUiAll();
+                if (dir == AccSubscription.TapListener.DIRECTION.RIGHT) {
+                    MainActivity.this.findViewById(R.id.bt_stableRight).setVisibility(View.GONE);
+                    MainActivity.this.findViewById(R.id.bt_tapRight).setVisibility(View.VISIBLE);
+                }
+                else if (dir == AccSubscription.TapListener.DIRECTION.LEFT) {
+                    MainActivity.this.findViewById(R.id.bt_stableLeft).setVisibility(View.GONE);
+                    MainActivity.this.findViewById(R.id.bt_tapLeft).setVisibility(View.VISIBLE);
+                }
+                else if (dir == AccSubscription.TapListener.DIRECTION.BOTTOM) {
+                    MainActivity.this.findViewById(R.id.bt_stableBottom).setVisibility(View.GONE);
+                    MainActivity.this.findViewById(R.id.bt_tapBottom).setVisibility(View.VISIBLE);
+                }
+                else if (dir == AccSubscription.TapListener.DIRECTION.TOP) {
+                    MainActivity.this.findViewById(R.id.bt_stableTop).setVisibility(View.GONE);
+                    MainActivity.this.findViewById(R.id.bt_tapTop).setVisibility(View.VISIBLE);
+                }
+                new Timer().schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        MainActivity.this.runOnUiThread(new Runnable() {
+                            public void run() {
+                                resetTapStateUiAll();
+                            }
+                        });
+                    }
+                }, 250);
+
             }
-        }, 250);
+        });
     }
 
     private void resetTapStateUiAll() {
