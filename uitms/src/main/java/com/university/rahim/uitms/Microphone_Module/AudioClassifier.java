@@ -32,8 +32,17 @@ public class AudioClassifier {
         audioProcessor.startRecording();
     }
 
-    private
-    void triangulate(){
+    // TODO: Delete this function
+    public void temp(final AudioReady resultListener) {
+        new Timer().schedule(new TimerTask() {
+        @Override
+        public void run() {
+            resultListener.AudioAfterTap(audioProcessor.retrieveTapInfo());
+        }
+    }, listeningDelay);
+    }
+
+    private void triangulate(){
         AudioMem mem = audioProcessor.retrieveTapInfo();
         double right, left;
         left = LeftMicMagnification * AudioProcessor.getMaxLeft(mem);
@@ -62,5 +71,9 @@ public class AudioClassifier {
                 triangulate();
             }
         }, listeningDelay);
+    }
+
+    public interface AudioReady{
+        public void AudioAfterTap(AudioMem mem);
     }
 }

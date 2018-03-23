@@ -111,12 +111,12 @@ public class MicActivity extends AppCompatActivity {
         {
             leftChannelAudioData[i] = arr[2*i];
             rightChannelAudioData[i] = arr[2*i+1];
-            series_left.appendData(new DataPoint(time, leftChannelAudioData[i]), true, 500);
+            series_left.appendData(new DataPoint(time,  1 * leftChannelAudioData[i]), true, 500);
             series_right.appendData(new DataPoint(time, rightChannelAudioData[i]), true, 500);
             time++;
         }
 
-        // since Top mic is weak, multiply it by 2
+        // Since Top mic is weak, multiply it by 2
         //series_left.appendData(new DataPoint(time, 1 * (AudioRecorder.getMax(leftChannelAudioData))), true, 50);
         //series_right.appendData(new DataPoint(time, AudioRecorder.getMax(rightChannelAudioData)), true, 50);
         //time += 1d;

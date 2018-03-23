@@ -1,21 +1,23 @@
-package com.university.rahim.uitms;
+package com.university.rahim.uitms.TestUI;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
-import com.university.rahim.uitms.Accelerometer_Module.AccelerometerSubscription;
+import com.university.rahim.uitms.Constants;
 import com.university.rahim.uitms.Microphone_Module.AudioClassifier;
+import com.university.rahim.uitms.Microphone_Module.AudioMem;
+import com.university.rahim.uitms.R;
+import com.university.rahim.uitms.TapSubscription;
 
-import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class
-MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
     private static final String TAG = "DBG_mainActivity";
     private TapSubscription subscription;
+    private Graph graphView;
 
 
     @Override
@@ -27,10 +29,20 @@ MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        graphView = new Graph();
+        graphView.createView(this);
+
         subscription = TapSubscription.subscribe(this, new TapSubscription.Result() {
             @Override
             public void onResultReady(Constants.DIRECTION dir) {
-                Log.d(TAG, "onResultReady: ");
+                Log.d(TAG, "onResultReady: " + dir.toString());
+            }
+        }, new AudioClassifier.AudioReady() {
+            @Override
+            public void AudioAfterTap(AudioMem mem) {
+                graphView.updateGraph(mem);
+
             }
         });
     }

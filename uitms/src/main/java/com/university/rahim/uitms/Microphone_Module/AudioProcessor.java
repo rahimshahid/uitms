@@ -3,6 +3,8 @@ package com.university.rahim.uitms.Microphone_Module;
 import android.media.AudioFormat;
 import android.util.Log;
 
+import com.university.rahim.uitms.Constants;
+
 /**
  * Created by RAHIM on 2/12/2018.
  */
@@ -15,7 +17,8 @@ public class AudioProcessor implements AudioRecorder.AudiRecorderListener {
     public AudioProcessor() {
         recorder = new AudioRecorder();
         //TODO: decide mem length
-        int memSize = recorder.getSamplingRate() / 10;
+        int memSize = recorder.getSamplingRate() / Constants.SamplingRateToBufferSizeRatio;
+        Log.d(TAG, "AudioProcessor: " + memSize);
         mem = new AudioMem(memSize);
     }
     public void startRecording() {

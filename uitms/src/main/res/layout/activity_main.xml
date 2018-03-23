@@ -1,14 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.university.rahim.uitms.MainActivity">
+    tools:context="com.university.rahim.uitms.TestUI.MainActivity">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:id="@+id/graphcontainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.jjoe64.graphview.GraphView
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:id="@+id/graph" />
+
+    </LinearLayout>
 
     <RelativeLayout
+        android:layout_below="@+id/graphcontainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:gravity="center">
 
         <LinearLayout
@@ -122,4 +137,4 @@
 
     </RelativeLayout>
 
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>

@@ -17,30 +17,31 @@ public class TapSubscription {
     private AudioClassifier micClassifier;
 
 
-    private TapSubscription(Context c, Result r) {
+    private TapSubscription(Context c, Result r, final AudioClassifier.AudioReady tempResultListener) {
         context = c;
         resutListener = r;
 
         micClassifier = new AudioClassifier();
         micClassifier.start();
 
-        AccelerometerSubscription.subscribe(context, new AccelerometerSubscription.TapListener() {
+        accSub = AccelerometerSubscription.subscribe(context, new AccelerometerSubscription.TapListener() {
             @Override
             public void onTap(Constants.DIRECTION dir) {
-                micClassifier.triangulateDelayed();
+                //micClassifier.triangulateDelayed();
+                micClassifier.temp(tempResultListener);
             }
         });
     }
 
-    public static TapSubscription subscribe(Context context, Result resultListener){
-        return new TapSubscription(context, resultListener);
+    public static TapSubscription subscribe(Context context, Result resultListener, AudioClassifier.AudioReady tempResLis){
+        return new TapSubscription(context, resultListener, tempResLis);
     }
 
     public void unSubscribe(){
         this.accSub.unsubscribe();
     }
 
-    interface Result{
+    public interface Result{
         void onResultReady(Constants.DIRECTION dir);
     }
 }
