@@ -1,6 +1,7 @@
 package com.university.rahim.uitms.Microphone_Module;
 
 import android.media.AudioFormat;
+import android.util.Log;
 
 /**
  * Created by RAHIM on 2/12/2018.
@@ -53,9 +54,13 @@ public class AudioProcessor implements AudioRecorder.AudiRecorderListener {
         }
     }
 
+    // Class level functions
+
     public static int getMaxLeft(AudioMem param){
-        if (param.q.size() <= 0)
+        if (param.q.size() <= 0) {
+            Log.d(TAG, "getMaxLeft: Too soon");
             return -1;
+        }
         int maxValue = param.q.get(0).left;
         for(int i=1;i < param.q.size();i++){
             if(Math.abs(param.q.get(i).left) > Math.abs(maxValue)){
@@ -65,8 +70,10 @@ public class AudioProcessor implements AudioRecorder.AudiRecorderListener {
         return maxValue;
     }
     public static int getMaxRight(AudioMem param){
-        if (param.q.size() <= 0)
+        if (param.q.size() <= 0) {
+            Log.d(TAG, "getMaxLeft: Too soon");
             return -1;
+        }
         int maxValue = param.q.get(0).right;
         for(int i=1;i < param.q.size();i++){
             if(Math.abs(param.q.get(i).right) > Math.abs(maxValue)){

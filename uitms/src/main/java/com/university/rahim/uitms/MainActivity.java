@@ -1,12 +1,11 @@
 package com.university.rahim.uitms;
 
-import android.os.Handler;
-import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
-import com.university.rahim.uitms.Accelerometer_Module.AccSubscription;
+import com.university.rahim.uitms.Accelerometer_Module.AccelerometerSubscription;
 import com.university.rahim.uitms.Microphone_Module.AudioClassifier;
 
 import java.util.ArrayList;
@@ -16,10 +15,8 @@ import java.util.TimerTask;
 public class
 MainActivity extends AppCompatActivity {
     private static final String TAG = "DBG_mainActivity";
-    AccSubscription tapDetectorSub = null;
+    private TapSubscription subscription;
 
-    //TODO
-    AudioClassifier ac = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,72 +27,38 @@ MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
-        //TODO
-        if(ac == null){
-            ac = new AudioClassifier();
-        }
-        ac.start();
-
-        tapDetectorSub = AccSubscription.subscribe(this, new AccSubscription.TapListener() {
+        subscription = TapSubscription.subscribe(this, new TapSubscription.Result() {
             @Override
-            public void onTap(AccSubscription.TapListener.DIRECTION dir) {
-                // TODO
-                new Timer().schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        ArrayList<String> res = ac.onTapDetected();
-                        for(String e: res){
-                            switch(e) {
-                                case "left":
-                                    UiOnTapDetected(DIRECTION.LEFT);
-                                    break;
-                                case "right":
-                                    UiOnTapDetected(DIRECTION.RIGHT);
-                                    break;
-                                case "top":
-                                    UiOnTapDetected(DIRECTION.TOP);
-                                    break;
-                                case "bottom":
-                                    UiOnTapDetected(DIRECTION.BOTTOM);
-                                    break;
-                            }
-                        }
-                    }
-                }, AudioClassifier.listeningDelay);
-
+            public void onResultReady(Constants.DIRECTION dir) {
+                Log.d(TAG, "onResultReady: ");
             }
         });
-
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        tapDetectorSub.unsubscribe();
-        tapDetectorSub = null;
-
-        //TODO
-        ac.pause();
-        ac = null;
+        subscription.unSubscribe();
     }
 
-    void UiOnTapDetected(final AccSubscription.TapListener.DIRECTION dir) {
+    // Just Some UI Stuff Below
+
+    void UiOnTapDetected(final Constants.DIRECTION dir) {
         MainActivity.this.runOnUiThread(new Runnable() {
             public void run() {
-                if (dir == AccSubscription.TapListener.DIRECTION.RIGHT) {
+                if (dir == Constants.DIRECTION.RIGHT) {
                     MainActivity.this.findViewById(R.id.bt_stableRight).setVisibility(View.GONE);
                     MainActivity.this.findViewById(R.id.bt_tapRight).setVisibility(View.VISIBLE);
                 }
-                else if (dir == AccSubscription.TapListener.DIRECTION.LEFT) {
+                else if (dir == Constants.DIRECTION.LEFT) {
                     MainActivity.this.findViewById(R.id.bt_stableLeft).setVisibility(View.GONE);
                     MainActivity.this.findViewById(R.id.bt_tapLeft).setVisibility(View.VISIBLE);
                 }
-                else if (dir == AccSubscription.TapListener.DIRECTION.BOTTOM) {
+                else if (dir == Constants.DIRECTION.BOTTOM) {
                     MainActivity.this.findViewById(R.id.bt_stableBottom).setVisibility(View.GONE);
                     MainActivity.this.findViewById(R.id.bt_tapBottom).setVisibility(View.VISIBLE);
                 }
-                else if (dir == AccSubscription.TapListener.DIRECTION.TOP) {
+                else if (dir == Constants.DIRECTION.TOP) {
                     MainActivity.this.findViewById(R.id.bt_stableTop).setVisibility(View.GONE);
                     MainActivity.this.findViewById(R.id.bt_tapTop).setVisibility(View.VISIBLE);
                 }
