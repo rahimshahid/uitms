@@ -23,7 +23,7 @@ import static com.university.rahim.uitms.Accelerometer_Module.Classifier.Evaluat
  */
 
 public class AccelerometerSubscription implements SensorEventListener {
-    private static final String TAG = "DBG_UITMSsubscription";
+    private static final String TAG = "DBG_Accsubscription";
     private TapDetector tapDetector;
     private SensorManager sensorManager;
     private static RandomForest rf;
@@ -59,7 +59,7 @@ public class AccelerometerSubscription implements SensorEventListener {
 
             @Override
             public void getWaveOnTap(ArrayList<SensorValue> arr) {
-                Log.d(TAG, "getWaveOnTap: ");
+                //Log.d(TAG, "getWaveOnTap: ");
                 double []wav = new double[96];
 
                 for (int i = 0; i<arr.size();i++) {
