@@ -6,7 +6,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.university.rahim.uitms.Constants;
-import com.university.rahim.uitms.Microphone_Module.AudioClassifier;
+import com.university.rahim.uitms.Microphone_Module.AudioClassifierManager;
 import com.university.rahim.uitms.Microphone_Module.AudioMem;
 import com.university.rahim.uitms.R;
 import com.university.rahim.uitms.TapSubscription;
@@ -38,11 +38,10 @@ public class MainActivity extends AppCompatActivity {
             public void onResultReady(Constants.DIRECTION dir) {
                 Log.d(TAG, "onResultReady: " + dir.toString());
             }
-        }, new AudioClassifier.AudioReady() {
+        }, new AudioClassifierManager.AudioReady() {
             @Override
             public void AudioAfterTap(AudioMem mem) {
                 graphView.updateGraph(mem);
-
             }
         });
     }
