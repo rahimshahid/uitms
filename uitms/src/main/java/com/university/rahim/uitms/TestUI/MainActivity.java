@@ -41,15 +41,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void subscribeUITMS(){
-        subscription = TapSubscription.subscribe(this, new TapSubscription.Result() {
+        subscription = TapSubscription.subscribe(this, new TapSubscription.ResultCallback() {
+            @Override
+            public void onTapDetected() {
+
+            }
+
+            @Override
+            public void onAudioReady(AudioMem mem) {
+                graphView.updateGraph(mem);
+            }
+
             @Override
             public void onResultReady(Constants.DIRECTION dir) {
                 Log.d(TAG, "onResultReady: " + dir.toString());
-            }
-        }, new AudioClassifierManager.AudioReady() {
-            @Override
-            public void AudioAfterTap(AudioMem mem) {
-                graphView.updateGraph(mem);
+                MainActivity.this.UiOnTapDetected(dir);
             }
         });
     }
@@ -60,23 +66,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    // Just Some UI Stuff Below
+    // Just Some ResultCallback Displaying UI Stuff Below
     void UiOnTapDetected(final Constants.DIRECTION dir) {
         MainActivity.this.runOnUiThread(new Runnable() {
             public void run() {
                 if (dir == Constants.DIRECTION.RIGHT) {
                     MainActivity.this.findViewById(R.id.bt_stableRight).setVisibility(View.GONE);
                     MainActivity.this.findViewById(R.id.bt_tapRight).setVisibility(View.VISIBLE);
-                }
-                else if (dir == Constants.DIRECTION.LEFT) {
+                } else if (dir == Constants.DIRECTION.LEFT) {
                     MainActivity.this.findViewById(R.id.bt_stableLeft).setVisibility(View.GONE);
                     MainActivity.this.findViewById(R.id.bt_tapLeft).setVisibility(View.VISIBLE);
-                }
-                else if (dir == Constants.DIRECTION.BOTTOM) {
+                } else if (dir == Constants.DIRECTION.BOTTOM) {
                     MainActivity.this.findViewById(R.id.bt_stableBottom).setVisibility(View.GONE);
                     MainActivity.this.findViewById(R.id.bt_tapBottom).setVisibility(View.VISIBLE);
-                }
-                else if (dir == Constants.DIRECTION.TOP) {
+                } else if (dir == Constants.DIRECTION.TOP) {
                     MainActivity.this.findViewById(R.id.bt_stableTop).setVisibility(View.GONE);
                     MainActivity.this.findViewById(R.id.bt_tapTop).setVisibility(View.VISIBLE);
                 }

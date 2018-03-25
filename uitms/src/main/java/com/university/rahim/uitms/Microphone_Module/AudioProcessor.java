@@ -31,6 +31,7 @@ public class AudioProcessor implements AudioRecorder.AudiRecorderListener {
         if (recorder != null) {
             recorder.stopRecording();
         }
+        recorder = null;
     }
 
     public AudioMem retrieveTapInfo(){
@@ -56,34 +57,4 @@ public class AudioProcessor implements AudioRecorder.AudiRecorderListener {
             mem.q.add(new AudioValue((int) arr[2 * i], (int) arr[2 * i + 1]));
         }
     }
-
-    // Class level functions
-
-    public static int getMaxLeft(AudioMem param){
-        if (param.q.size() <= 0) {
-            Log.d(TAG, "getMaxLeft: Too soon");
-            return -1;
-        }
-        int maxValue = param.q.get(0).left;
-        for(int i=1;i < param.q.size();i++){
-            if(Math.abs(param.q.get(i).left) > Math.abs(maxValue)){
-                maxValue = param.q.get(i).left;
-            }
-        }
-        return maxValue;
-    }
-    public static int getMaxRight(AudioMem param){
-        if (param.q.size() <= 0) {
-            Log.d(TAG, "getMaxLeft: Too soon");
-            return -1;
-        }
-        int maxValue = param.q.get(0).right;
-        for(int i=1;i < param.q.size();i++){
-            if(Math.abs(param.q.get(i).right) > Math.abs(maxValue)){
-                maxValue = param.q.get(i).right;
-            }
-        }
-        return maxValue;
-    }
-
 }

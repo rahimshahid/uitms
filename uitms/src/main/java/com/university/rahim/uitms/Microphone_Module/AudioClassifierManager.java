@@ -1,9 +1,9 @@
 package com.university.rahim.uitms.Microphone_Module;
 
-import android.util.Log;
-
+import com.university.rahim.uitms.Constants;
 import com.university.rahim.uitms.Microphone_Module.SoundFeatures.Feature;
 import com.university.rahim.uitms.Microphone_Module.SoundFeatures.SoundFeatureExtractor;
+import com.university.rahim.uitms.TapSubscription;
 
 import java.util.ArrayList;
 import java.util.Timer;
@@ -26,6 +26,7 @@ public class AudioClassifierManager {
 
     public void pause(){
         audioProcessor.stopRecording();
+        audioProcessor = null;
     }
 
     public void start(){
@@ -35,25 +36,28 @@ public class AudioClassifierManager {
         audioProcessor.startRecording();
     }
 
-    private void triangulate(AudioReady tempResultListener){
+    private void triangulate(TapSubscription.ResultCallback resultListener){
+        if (audioProcessor == null){
+            return;
+        }
         AudioMem mem = audioProcessor.retrieveTapInfo();
 
         ArrayList<Feature> features = SoundFeatureExtractor.getTimeDomainFeatures(mem, true);
-        this.tempClassifier(features);
+        this.tempClassifier(features, resultListener);
 
-        tempResultListener.AudioAfterTap(mem);
+        resultListener.onAudioReady(mem);
     }
 
-    public void triangulateDelayed(final AudioReady resultListener){
+    public void triangulateDelayed(final TapSubscription.ResultCallback resultlistener){
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
-                triangulate(resultListener);
+                triangulate(resultlistener);
             }
         }, listeningDelay);
     }
 
-    private void tempClassifier(ArrayList<Feature> features) {
+    private void tempClassifier(ArrayList<Feature> features, TapSubscription.ResultCallback resultListener) {
         int topPoints = 0;
         int bottomPoints = 0;
         int leftPoints = 0;
@@ -118,15 +122,19 @@ public class AudioClassifierManager {
         }
 
         if (topPoints >= bottomPoints) {
-            Log.d(TAG, "tempClassifier: TOP");
+            //Log.d(TAG, "tempClassifier: TOP");
+            resultListener.onResultReady(Constants.DIRECTION.TOP);
         } else {
-            Log.d(TAG, "tempClassifier: BOTTOM");
+            //Log.d(TAG, "tempClassifier: BOTTOM");
+            resultListener.onResultReady(Constants.DIRECTION.BOTTOM);
         }
 
         if (leftPoints >= rightPoints) {
-            Log.d(TAG, "tempClassifier: LEFT");
+            //Log.d(TAG, "tempClassifier: LEFT");
+            resultListener.onResultReady(Constants.DIRECTION.LEFT);
         } else {
-            Log.d(TAG, "tempClassifier: RIGHT");
+            //Log.d(TAG, "tempClassifier: RIGHT");
+            resultListener.onResultReady(Constants.DIRECTION.RIGHT);
         }
     }
 
@@ -137,9 +145,5 @@ public class AudioClassifierManager {
             }
         }
         return -1;
-    }
-
-    public interface AudioReady{
-        public void AudioAfterTap(AudioMem mem);
     }
 }
