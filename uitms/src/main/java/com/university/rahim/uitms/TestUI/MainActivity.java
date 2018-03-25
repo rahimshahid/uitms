@@ -29,10 +29,18 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
         graphView = new Graph();
         graphView.createView(this);
+        this.subscribeUITMS();
+    }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        this.unSubscribeUITMS();
+    }
+
+    private void subscribeUITMS(){
         subscription = TapSubscription.subscribe(this, new TapSubscription.Result() {
             @Override
             public void onResultReady(Constants.DIRECTION dir) {
@@ -46,14 +54,13 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
+    private void unSubscribeUITMS(){
         subscription.unSubscribe();
+        subscription = null;
     }
 
-    // Just Some UI Stuff Below
 
+    // Just Some UI Stuff Below
     void UiOnTapDetected(final Constants.DIRECTION dir) {
         MainActivity.this.runOnUiThread(new Runnable() {
             public void run() {

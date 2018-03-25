@@ -16,13 +16,16 @@ public class SoundFeatureExtractor {
     public enum FEATURES{AVG_DX2_RIGHT, AVG_DX2_LEFT, MAX_DX2_RIGHT, MAX_DX2_LEFT, FIRST_LEFT_DETECTION, FIRST_RIGHT_DETECTION,
         MAX_AMP_LEFT, MAX_AMP_RIGHT, AVG_AMP_RIGHT, AVG_AMP_LEFT};
 
-    public static void getTimeDomainFeatures(AudioMem mem, boolean applyTapFilter){
+    public static ArrayList<Feature> getTimeDomainFeatures(AudioMem mem, boolean applyTapFilter){
         ArrayList<Feature> features = DX2.getFeatures(mem, applyTapFilter);
         features.addAll(Amplitude.getFeatures(mem));
 
 
         for(Feature f: features){
-            Log.d(TAG, "getTimeDomainFeatures: " + f.name.toString() + " -> " + f.val);
+            //if (f.name.toString().contains("AMP"))
+                //Log.d(TAG, "getTimeDomainFeatures: " + f.name.toString() + " -> " + f.val);
         }
+
+        return features;
     }
 }

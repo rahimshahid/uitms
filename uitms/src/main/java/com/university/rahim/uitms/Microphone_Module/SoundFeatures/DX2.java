@@ -6,7 +6,10 @@ import com.university.rahim.uitms.Microphone_Module.AudioMem;
 import com.university.rahim.uitms.Microphone_Module.AudioValue;
 
 import java.util.ArrayList;
-import java.util.Collections;
+
+import static com.university.rahim.uitms.Constants.noiseThreshold;
+import static com.university.rahim.uitms.Constants.outlierThreshold;
+import static com.university.rahim.uitms.Constants.surroundingSize;
 
 /**
  * Created by rahim on 3/24/2018.
@@ -21,9 +24,6 @@ public class DX2 {
     private double avg_dx_left, avg_dx_right, avg_dx2_left, avg_dx2_right;
     private double max_dx2_left, max_dx2_right;
     private int first_left_detection, first_right_detection;
-
-    private int NoiseTolerance = 450;
-
 
 
     public static ArrayList<Feature> getFeatures(AudioMem mem, boolean applyFilter){
@@ -57,9 +57,9 @@ public class DX2 {
         for (int i = 1; i < mem.q.size() - 1; i++){
             int leftDx = mem.q.get(i - 1).left - mem.q.get(i + 1).left;
             int rightDx = mem.q.get(i - 1).right - mem.q.get(i + 1).right;
-            if (Math.abs(leftDx) < NoiseTolerance)
+            if (Math.abs(leftDx) < noiseThreshold)
                 leftDx = 0;
-            if (Math.abs(rightDx) < NoiseTolerance)
+            if (Math.abs(rightDx) < noiseThreshold)
                 rightDx = 0;
             avgDxLeft += leftDx;
             avgDxRight += rightDx;
@@ -84,9 +84,9 @@ public class DX2 {
         for (int i = 1; i < dx.size() - 1; i++){
             int leftDx = dx.get(i - 1).left - dx.get(i + 1).left;
             int rightDx = dx.get(i - 1).right - dx.get(i + 1).right;
-            if (Math.abs(leftDx) < NoiseTolerance)
+            if (Math.abs(leftDx) < noiseThreshold)
                 leftDx = 0;
-            if (Math.abs(rightDx) < NoiseTolerance)
+            if (Math.abs(rightDx) < noiseThreshold)
                 rightDx = 0;
             avgDxLeft += leftDx;
             avgDxRight += rightDx;
@@ -138,8 +138,6 @@ public class DX2 {
 
 
             // First Detection
-            int outlierThreshold = 550;
-            int surroundingSize = 100;
 
             if (!firstLeftFound) {
                 if (val.left != 0){
