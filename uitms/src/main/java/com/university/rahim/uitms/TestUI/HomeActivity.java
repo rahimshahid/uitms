@@ -1,5 +1,6 @@
 package com.university.rahim.uitms.TestUI;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -134,9 +135,8 @@ public class HomeActivity extends AppCompatActivity {
                             case 2:
                                 break;
                             case 3:
-                                //Intent i = new Intent(Home.this, SettingsActivity.class);
-                                //i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                //startActivity(i);
+                                Intent i = new Intent(HomeActivity.this, SettingsActivity.class);
+                                startActivity(i);
                                 break;
                         }
 
