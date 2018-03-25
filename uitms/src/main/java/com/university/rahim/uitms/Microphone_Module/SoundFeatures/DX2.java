@@ -55,16 +55,18 @@ public class DX2 {
         double avgDxLeft = 0;
 
         for (int i = 1; i < mem.q.size() - 1; i++){
-            int leftDx = mem.q.get(i - 1).left - mem.q.get(i + 1).left;
-            int rightDx = mem.q.get(i - 1).right - mem.q.get(i + 1).right;
-            if (Math.abs(leftDx) < noiseThreshold)
-                leftDx = 0;
-            if (Math.abs(rightDx) < noiseThreshold)
-                rightDx = 0;
-            avgDxLeft += leftDx;
-            avgDxRight += rightDx;
-            AudioValue res = new AudioValue(leftDx, rightDx);
-            dx.add(res);
+            if (!(mem.q.get(i + 1) == null || mem.q.get(i - 1) == null || mem.q.get(i) == null)){
+                int leftDx = mem.q.get(i - 1).left - mem.q.get(i + 1).left;
+                int rightDx = mem.q.get(i - 1).right - mem.q.get(i + 1).right;
+                if (Math.abs(leftDx) < noiseThreshold)
+                    leftDx = 0;
+                if (Math.abs(rightDx) < noiseThreshold)
+                    rightDx = 0;
+                avgDxLeft += leftDx;
+                avgDxRight += rightDx;
+                AudioValue res = new AudioValue(leftDx, rightDx);
+                dx.add(res);
+            }
         }
 
         avgDxLeft /= dx.size();
