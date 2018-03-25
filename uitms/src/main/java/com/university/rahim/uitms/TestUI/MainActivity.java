@@ -1,12 +1,12 @@
 package com.university.rahim.uitms.TestUI;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
 import com.university.rahim.uitms.Constants;
-import com.university.rahim.uitms.Microphone_Module.AudioClassifierManager;
 import com.university.rahim.uitms.Microphone_Module.AudioMem;
 import com.university.rahim.uitms.R;
 import com.university.rahim.uitms.TapSubscription;
@@ -23,6 +23,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Intent i = new Intent(MainActivity.this, HomeActivity.class);
+        //i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(i);
+        finish();
+
         setContentView(R.layout.activity_main);
     }
 

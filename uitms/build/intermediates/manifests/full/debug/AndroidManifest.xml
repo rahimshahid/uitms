@@ -26,6 +26,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.university.rahim.uitms.TestUI.HomeActivity"
+            android:theme="@style/CustomTheme" />
 
         <meta-data
             android:name="android.support.VERSION"

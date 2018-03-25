@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/md_blue_grey_50"
+    tools:context="com.university.rahim.uitms.TestUI.HomeActivity">
+
+    <RelativeLayout
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/home_head"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:background="@color/colorPrimary">
+
+            <ImageView
+                android:id="@+id/hamIcon"
+                android:padding="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_width="55dp"
+                android:layout_height="45dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/ham"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginRight="65dp"
+                android:gravity="center"
+                android:textSize="32sp"
+                android:textColor="@color/md_white_1000"
+                android:fontFamily="monospace"
+                android:text="TapIt"/>
+
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_below="@+id/home_head"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/home_img"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:src="@drawable/nav_menu_header_bg"
+                android:scaleType="centerCrop"/>
+
+            <View
+                android:layout_below="@+id/home_img"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="@color/colorPrimary"/>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_below="@+id/home_head"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/stepsWalked"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="16dp"
+                android:paddingBottom="25dp"
+                android:gravity="center"
+                android:textSize="24sp"
+                android:textColor="@color/md_white_1000"
+                android:text="Tap Intensity"/>
+
+            <RelativeLayout
+                android:layout_below="@+id/directionView"
+                android:layout_width="280dp"
+                android:layout_height="280dp"
+                android:gravity="center">
+
+                <LinearLayout
+                    android:id="@+id/eventTop"
+                    android:layout_gravity="top"
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <Button
+                        android:visibility="visible"
+                        android:id="@+id/bt_stableTop"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorYellow"
+                        android:text="Idle"/>
+
+                    <Button
+                        android:visibility="gone"
+                        android:id="@+id/bt_tapTop"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorGreen"
+                        android:text="Tap!"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/eventBottom"
+                    android:layout_centerHorizontal="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <Button
+                        android:visibility="visible"
+                        android:id="@+id/bt_stableBottom"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorYellow"
+                        android:text="Idle"/>
+
+                    <Button
+                        android:visibility="gone"
+                        android:id="@+id/bt_tapBottom"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorGreen"
+                        android:text="Tap!"/>
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_centerVertical="true">
+
+                    <LinearLayout
+                        android:id="@+id/eventLeft"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <Button
+                            android:visibility="visible"
+                            android:id="@+id/bt_stableLeft"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@color/colorYellow"
+                            android:text="Idle"/>
+
+                        <Button
+                            android:visibility="gone"
+                            android:id="@+id/bt_tapLeft"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@color/colorGreen"
+                            android:text="Tap!"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/eventRight"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <Button
+                            android:visibility="visible"
+                            android:id="@+id/bt_stableRight"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@color/colorYellow"
+                            android:text="Idle"/>
+
+                        <Button
+                            android:visibility="gone"
+                            android:id="@+id/bt_tapRight"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@color/colorGreen"
+                            android:text="Tap!"/>
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_margin="32dp"
+                android:textSize="18sp"
+                android:text="Tap in the Four Directions Around the Phone"/>
+
+            <com.jjoe64.graphview.GraphView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/graph" />
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

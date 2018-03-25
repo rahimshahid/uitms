@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "D:\\Dropbox\\Projects\\AndroidProjects\\fyp\\uitms\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-v12\\values-v12.xml",
+            "outputFile": "C:\\Users\\Rahim\\StudioProjects\\fyp\\uitms\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-v12\\values-v12.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\rahim\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\07161a58f9fefd3b9436faff2bbb5c39\\res\\values-v12\\values-v12.xml",
+                    "source": "C:\\Users\\Rahim\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\fd0b74dc9648b856381f99f063b6c70f\\res\\values-v12\\values-v12.xml",
                     "from": {
                         "startLines": "2,5,8,9",
                         "startColumns": "4,4,4,4",
