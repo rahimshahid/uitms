@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from C:\Users\Rahim\StudioProjects\fyp\uitms\src\main\AndroidManifest.xml:2:1-27:12
-INJECTED from C:\Users\Rahim\StudioProjects\fyp\uitms\src\main\AndroidManifest.xml:2:1-27:12
-INJECTED from C:\Users\Rahim\StudioProjects\fyp\uitms\src\main\AndroidManifest.xml:2:1-27:12
-INJECTED from C:\Users\Rahim\StudioProjects\fyp\uitms\src\main\AndroidManifest.xml:2:1-27:12
+ADDED from C:\Users\Rahim\StudioProjects\fyp\uitms\src\main\AndroidManifest.xml:2:1-24:12
+INJECTED from C:\Users\Rahim\StudioProjects\fyp\uitms\src\main\AndroidManifest.xml:2:1-24:12
+INJECTED from C:\Users\Rahim\StudioProjects\fyp\uitms\src\main\AndroidManifest.xml:2:1-24:12
+INJECTED from C:\Users\Rahim\StudioProjects\fyp\uitms\src\main\AndroidManifest.xml:2:1-24:12
 MERGED from [com.jjoe64:graphview:4.2.1] C:\Users\Rahim\.gradle\caches\transforms-1\files-1.1\graphview-4.2.1.aar\eb3eb55c006721888a96b4a3180d1aa8\AndroidManifest.xml:2:1-14:12
 MERGED from [com.github.jakob-grabner:Circle-Progress-View:v1.3] C:\Users\Rahim\.gradle\caches\transforms-1\files-1.1\Circle-Progress-View-v1.3.aar\d3872050aed832c16bf4d5f661d9d555\AndroidManifest.xml:2:1-14:12
 MERGED from [de.hdodenhof:circleimageview:2.1.0] C:\Users\Rahim\.gradle\caches\transforms-1\files-1.1\circleimageview-2.1.0.aar\60e356bdff3743a813bce05d55263b3f\AndroidManifest.xml:2:1-11:12
@@ -26,20 +26,20 @@ MERGED from [com.mikepenz:iconics-core:3.0.2] C:\Users\Rahim\.gradle\caches\tran
 MERGED from [com.mikepenz:fastadapter:3.2.4] C:\Users\Rahim\.gradle\caches\transforms-1\files-1.1\fastadapter-3.2.4.aar\a14608fc31c01e1bdbb98c9cf477ffdb\AndroidManifest.xml:2:1-12:12
 MERGED from [com.mikepenz:fastadapter-extensions-expandable:3.2.4] C:\Users\Rahim\.gradle\caches\transforms-1\files-1.1\fastadapter-extensions-expandable-3.2.4.aar\a3f6fa963344c2611f875f9875a4cbac\AndroidManifest.xml:2:1-12:12
 MERGED from [android.arch.lifecycle:runtime:1.0.0] C:\Users\Rahim\.gradle\caches\transforms-1\files-1.1\runtime-1.0.0.aar\73b6253ee6c24d1622c6180428a42aa1\AndroidManifest.xml:17:1-30:12
-INJECTED from C:\Users\Rahim\StudioProjects\fyp\uitms\src\main\AndroidManifest.xml:2:1-27:12
-INJECTED from C:\Users\Rahim\StudioProjects\fyp\uitms\src\main\AndroidManifest.xml:2:1-27:12
-INJECTED from C:\Users\Rahim\StudioProjects\fyp\uitms\src\main\AndroidManifest.xml:2:1-27:12
+INJECTED from C:\Users\Rahim\StudioProjects\fyp\uitms\src\main\AndroidManifest.xml:2:1-24:12
+INJECTED from C:\Users\Rahim\StudioProjects\fyp\uitms\src\main\AndroidManifest.xml:2:1-24:12
+INJECTED from C:\Users\Rahim\StudioProjects\fyp\uitms\src\main\AndroidManifest.xml:2:1-24:12
 	package
 		ADDED from C:\Users\Rahim\StudioProjects\fyp\uitms\src\main\AndroidManifest.xml:3:5-41
 		INJECTED from C:\Users\Rahim\StudioProjects\fyp\uitms\src\main\AndroidManifest.xml
 		INJECTED from C:\Users\Rahim\StudioProjects\fyp\uitms\src\main\AndroidManifest.xml
 	android:versionName
 		INJECTED from C:\Users\Rahim\StudioProjects\fyp\uitms\src\main\AndroidManifest.xml
-		ADDED from C:\Users\Rahim\StudioProjects\fyp\uitms\src\main\AndroidManifest.xml:2:1-27:12
+		ADDED from C:\Users\Rahim\StudioProjects\fyp\uitms\src\main\AndroidManifest.xml:2:1-24:12
 		INJECTED from C:\Users\Rahim\StudioProjects\fyp\uitms\src\main\AndroidManifest.xml
 	android:versionCode
 		INJECTED from C:\Users\Rahim\StudioProjects\fyp\uitms\src\main\AndroidManifest.xml
-		ADDED from C:\Users\Rahim\StudioProjects\fyp\uitms\src\main\AndroidManifest.xml:2:1-27:12
+		ADDED from C:\Users\Rahim\StudioProjects\fyp\uitms\src\main\AndroidManifest.xml:2:1-24:12
 		INJECTED from C:\Users\Rahim\StudioProjects\fyp\uitms\src\main\AndroidManifest.xml
 	xmlns:android
 		ADDED from C:\Users\Rahim\StudioProjects\fyp\uitms\src\main\AndroidManifest.xml:2:11-69
@@ -48,7 +48,7 @@ ADDED from C:\Users\Rahim\StudioProjects\fyp\uitms\src\main\AndroidManifest.xml:
 	android:name
 		ADDED from C:\Users\Rahim\StudioProjects\fyp\uitms\src\main\AndroidManifest.xml:5:22-68
 application
-ADDED from C:\Users\Rahim\StudioProjects\fyp\uitms\src\main\AndroidManifest.xml:7:5-25:19
+ADDED from C:\Users\Rahim\StudioProjects\fyp\uitms\src\main\AndroidManifest.xml:7:5-22:19
 MERGED from [com.jjoe64:graphview:4.2.1] C:\Users\Rahim\.gradle\caches\transforms-1\files-1.1\graphview-4.2.1.aar\eb3eb55c006721888a96b4a3180d1aa8\AndroidManifest.xml:11:5-12:19
 MERGED from [com.jjoe64:graphview:4.2.1] C:\Users\Rahim\.gradle\caches\transforms-1\files-1.1\graphview-4.2.1.aar\eb3eb55c006721888a96b4a3180d1aa8\AndroidManifest.xml:11:5-12:19
 MERGED from [com.github.jakob-grabner:Circle-Progress-View:v1.3] C:\Users\Rahim\.gradle\caches\transforms-1\files-1.1\Circle-Progress-View-v1.3.aar\d3872050aed832c16bf4d5f661d9d555\AndroidManifest.xml:12:5-20
@@ -95,26 +95,22 @@ MERGED from [android.arch.lifecycle:runtime:1.0.0] C:\Users\Rahim\.gradle\caches
 		ADDED from C:\Users\Rahim\StudioProjects\fyp\uitms\src\main\AndroidManifest.xml:8:9-35
 	android:theme
 		ADDED from C:\Users\Rahim\StudioProjects\fyp\uitms\src\main\AndroidManifest.xml:13:9-40
-activity#com.university.rahim.uitms.TestUI.MainActivity
-ADDED from C:\Users\Rahim\StudioProjects\fyp\uitms\src\main\AndroidManifest.xml:14:9-16:20
+activity#com.university.rahim.uitms.TestUI.HomeActivity
+ADDED from C:\Users\Rahim\StudioProjects\fyp\uitms\src\main\AndroidManifest.xml:14:9-21:20
+	android:theme
+		ADDED from C:\Users\Rahim\StudioProjects\fyp\uitms\src\main\AndroidManifest.xml:15:13-47
 	android:name
 		ADDED from C:\Users\Rahim\StudioProjects\fyp\uitms\src\main\AndroidManifest.xml:14:19-54
-activity#com.university.rahim.uitms.TestUI.HomeActivity
-ADDED from C:\Users\Rahim\StudioProjects\fyp\uitms\src\main\AndroidManifest.xml:17:9-24:20
-	android:theme
-		ADDED from C:\Users\Rahim\StudioProjects\fyp\uitms\src\main\AndroidManifest.xml:18:13-47
-	android:name
-		ADDED from C:\Users\Rahim\StudioProjects\fyp\uitms\src\main\AndroidManifest.xml:17:19-54
 intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
-ADDED from C:\Users\Rahim\StudioProjects\fyp\uitms\src\main\AndroidManifest.xml:19:13-23:29
+ADDED from C:\Users\Rahim\StudioProjects\fyp\uitms\src\main\AndroidManifest.xml:16:13-20:29
 action#android.intent.action.MAIN
-ADDED from C:\Users\Rahim\StudioProjects\fyp\uitms\src\main\AndroidManifest.xml:20:17-69
+ADDED from C:\Users\Rahim\StudioProjects\fyp\uitms\src\main\AndroidManifest.xml:17:17-69
 	android:name
-		ADDED from C:\Users\Rahim\StudioProjects\fyp\uitms\src\main\AndroidManifest.xml:20:25-66
+		ADDED from C:\Users\Rahim\StudioProjects\fyp\uitms\src\main\AndroidManifest.xml:17:25-66
 category#android.intent.category.LAUNCHER
-ADDED from C:\Users\Rahim\StudioProjects\fyp\uitms\src\main\AndroidManifest.xml:22:17-77
+ADDED from C:\Users\Rahim\StudioProjects\fyp\uitms\src\main\AndroidManifest.xml:19:17-77
 	android:name
-		ADDED from C:\Users\Rahim\StudioProjects\fyp\uitms\src\main\AndroidManifest.xml:22:27-74
+		ADDED from C:\Users\Rahim\StudioProjects\fyp\uitms\src\main\AndroidManifest.xml:19:27-74
 uses-sdk
 INJECTED from C:\Users\Rahim\StudioProjects\fyp\uitms\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from C:\Users\Rahim\StudioProjects\fyp\uitms\src\main\AndroidManifest.xml
