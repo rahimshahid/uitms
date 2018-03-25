@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/md_blue_grey_50"
+    android:background="@color/md_blue_grey_100"
     tools:context="com.university.rahim.uitms.TestUI.HomeActivity">
 
     <RelativeLayout
@@ -59,7 +59,7 @@
             <View
                 android:layout_below="@+id/home_img"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="220dp"
                 android:background="@color/colorPrimary"/>
 
         </RelativeLayout>
@@ -76,122 +76,121 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="16dp"
-                android:paddingBottom="25dp"
+                android:paddingBottom="16dp"
                 android:gravity="center"
                 android:textSize="24sp"
                 android:textColor="@color/md_white_1000"
                 android:text="Tap Direction"/>
 
             <RelativeLayout
-                android:layout_below="@+id/directionView"
-                android:layout_width="280dp"
+                android:layout_width="310dp"
                 android:layout_height="280dp"
+                android:layout_below="@+id/directionView"
                 android:gravity="center">
 
                 <LinearLayout
                     android:id="@+id/eventTop"
-                    android:layout_gravity="top"
-                    android:layout_centerHorizontal="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    >
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="top">
 
-                    <Button
-                        android:visibility="visible"
+                    <ImageView
                         android:id="@+id/bt_stableTop"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@color/colorYellow"
-                        android:text="Idle"/>
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:visibility="visible"
+                        android:src="@drawable/ic_up_idle"
+                        android:scaleType="fitXY"/>
 
-                    <Button
-                        android:visibility="gone"
+                    <ImageView
                         android:id="@+id/bt_tapTop"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@color/colorGreen"
-                        android:text="Tap!"/>
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:src="@drawable/ic_up_tap"
+                        android:visibility="gone"
+                        android:scaleType="fitXY" />
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/eventBottom"
-                    android:layout_centerHorizontal="true"
-                    android:layout_alignParentBottom="true"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true">
 
-                    <Button
-                        android:visibility="visible"
+                    <ImageView
                         android:id="@+id/bt_stableBottom"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@color/colorYellow"
-                        android:text="Idle"/>
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:visibility="visible"
+                        android:src="@drawable/ic_down_idle"
+                        android:scaleType="fitXY"/>
 
-                    <Button
-                        android:visibility="gone"
+                    <ImageView
                         android:id="@+id/bt_tapBottom"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@color/colorGreen"
-                        android:text="Tap!"/>
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:src="@drawable/ic_down_tap"
+                        android:visibility="gone"
+                        android:scaleType="fitXY"/>
 
                 </LinearLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_centerVertical="true">
+                    android:layout_centerVertical="true"
+                    android:orientation="horizontal">
 
                     <LinearLayout
                         android:id="@+id/eventLeft"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true">
 
-                        <Button
-                            android:visibility="visible"
+                        <ImageView
                             android:id="@+id/bt_stableLeft"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@color/colorYellow"
-                            android:text="Idle"/>
+                            android:layout_width="100dp"
+                            android:layout_height="80dp"
+                            android:src="@drawable/ic_left_idle"
+                            android:visibility="visible"
+                            android:scaleType="fitXY"/>
 
-                        <Button
-                            android:visibility="gone"
+                        <ImageView
                             android:id="@+id/bt_tapLeft"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@color/colorGreen"
-                            android:text="Tap!"/>
+                            android:layout_width="100dp"
+                            android:layout_height="80dp"
+                            android:src="@drawable/ic_left_tap"
+                            android:visibility="gone"
+                            android:scaleType="fitXY" />
 
                     </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/eventRight"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentEnd="true"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true">
 
-                        <Button
-                            android:visibility="visible"
+                        <ImageView
                             android:id="@+id/bt_stableRight"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@color/colorYellow"
-                            android:text="Idle"/>
+                            android:layout_width="100dp"
+                            android:layout_height="80dp"
+                            android:src="@drawable/ic_right_idle"
+                            android:visibility="visible"
+                            android:scaleType="fitXY"/>
 
-                        <Button
-                            android:visibility="gone"
+                        <ImageView
                             android:id="@+id/bt_tapRight"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@color/colorGreen"
-                            android:text="Tap!"/>
+                            android:layout_width="100dp"
+                            android:layout_height="80dp"
+                            android:src="@drawable/ic_right_tap"
+                            android:visibility="gone"
+                            android:scaleType="fitXY"/>
 
                     </LinearLayout>
 

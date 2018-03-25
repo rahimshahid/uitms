@@ -23,12 +23,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        Intent i = new Intent(MainActivity.this, HomeActivity.class);
-        //i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(i);
-        finish();
-
         setContentView(R.layout.activity_main);
     }
 
