@@ -2,13 +2,11 @@ package com.university.rahim.uitms.Microphone_Module.SoundFeatures;
 
 import android.util.Log;
 
+import com.university.rahim.uitms.Constants;
 import com.university.rahim.uitms.Microphone_Module.AudioMem;
 import com.university.rahim.uitms.Microphone_Module.AudioValue;
 
 import java.util.ArrayList;
-
-import static com.university.rahim.uitms.Constants.noiseThreshold;
-import static com.university.rahim.uitms.Constants.outlierThreshold;
 import static com.university.rahim.uitms.Constants.surroundingSize;
 
 /**
@@ -24,6 +22,7 @@ public class DX2 {
     private double avg_dx_left, avg_dx_right, avg_dx2_left, avg_dx2_right;
     private double max_dx2_left, max_dx2_right;
     private int first_left_detection, first_right_detection;
+    private int noiseThreshold = Constants.getnoiseThreshold();
 
 
     public static ArrayList<Feature> getFeatures(AudioMem mem, boolean applyFilter){
@@ -153,7 +152,7 @@ public class DX2 {
                         }
                     }
                     avg /= count;
-                    if (Math.abs(avg) < outlierThreshold){
+                    if (Math.abs(avg) < noiseThreshold){
                         surroundedByData = false;
                     }
 
@@ -175,7 +174,7 @@ public class DX2 {
                         }
                     }
                     avg /= count;
-                    if (Math.abs(avg) < outlierThreshold){
+                    if (Math.abs(avg) < noiseThreshold){
                         surroundedByData = false;
                     }
                     if (surroundedByData) {

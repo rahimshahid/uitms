@@ -11,6 +11,7 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <application
+        android:name="com.university.rahim.uitms.App"
         android:allowBackup="true"
         android:debuggable="true"
         android:icon="@mipmap/ic_launcher"
@@ -19,6 +20,7 @@
         android:supportsRtl="true"
         android:testOnly="true"
         android:theme="@style/AppTheme" >
+        >
         <activity
             android:name="com.university.rahim.uitms.TestUI.HomeActivity"
             android:theme="@style/CustomTheme" >

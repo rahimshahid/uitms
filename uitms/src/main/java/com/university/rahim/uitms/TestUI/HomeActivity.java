@@ -136,6 +136,7 @@ public class HomeActivity extends AppCompatActivity {
                                 break;
                             case 3:
                                 Intent i = new Intent(HomeActivity.this, SettingsActivity.class);
+                                finish();
                                 startActivity(i);
                                 break;
                         }

@@ -42,8 +42,8 @@ public class AccelerometerSubscription implements SensorEventListener {
 
         rf = new ModelRandomForest();
 
-        tapDetector = new TapDetector(listener, 40, 0.1, 0.9,
-                1, 250);
+        tapDetector = new TapDetector(listener, 40, Constants.getMinTapThreshold(), Constants.getMinTapThreshold() + 0.8,
+                1, Constants.getdelayBtwTaps());
     }
 
     public void unsubscribe() {
@@ -74,7 +74,7 @@ public class AccelerometerSubscription implements SensorEventListener {
 
                 try {
                     String res = evalClassifier(rf, wav);
-                    //Log.d(TAG, "result: " + res);
+                    Log.d(TAG, "result: " + res);
                     if (res.contains("Left"))
                         tapListener.onTap(Constants.DIRECTION.LEFT);
                     else if (res.contains("Right"))
