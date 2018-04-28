@@ -20,7 +20,7 @@ public class Constants {
 
     public static int listeningDelay = 100;  // Listen for 'x' msec between tap detected and triangulating result
     public static int SamplingRateToBufferSizeRatio = 12;  // BufferSize = Sampling Rate / SamplingRateToBufferSizeRatio
-    public static int rightSensitivity = 13000; // 13000 optimum, increasing this will result in higher prob for RIGHT
+    public static int leftRightThreshold = 8000; // 8000 optimum
     private static int noiseThreshold = 1000; // 850 optimum, increase if atmosphere has noise
     //public static int outlierThreshold = 850; // 650 optimum, increase if noise is high
     public static int surroundingSize = 100; // 100 optimum, increase if noise is high

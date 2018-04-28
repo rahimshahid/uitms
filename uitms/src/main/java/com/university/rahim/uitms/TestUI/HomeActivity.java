@@ -24,15 +24,12 @@ import com.university.rahim.uitms.TapSubscription;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import at.grabner.circleprogress.CircleProgressView;
-
 public class HomeActivity extends AppCompatActivity {
     private static final String TAG = "DBG_HomeActivity";
 
     private Drawer drawer;
     private TapSubscription subscription;
-    private Graph graphView;
-
+    private MicGraph MicGraphView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +41,8 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        graphView = new Graph();
-        graphView.createView(this);
+        MicGraphView = new MicGraph();
+        MicGraphView.createView(this);
         this.subscribeUITMS();
     }
 
@@ -64,7 +61,7 @@ public class HomeActivity extends AppCompatActivity {
 
             @Override
             public void onAudioReady(AudioMem mem) {
-                graphView.updateGraph(mem);
+                MicGraphView.updateGraph(mem);
             }
 
             @Override

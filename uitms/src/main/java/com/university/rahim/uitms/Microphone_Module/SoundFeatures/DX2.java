@@ -25,7 +25,7 @@ public class DX2 {
     private int noiseThreshold = Constants.getnoiseThreshold();
 
 
-    public static ArrayList<Feature> getFeatures(AudioMem mem, boolean applyFilter){
+    public static ArrayList<Feature> getFeatures(AudioMem mem, boolean applyFilter) throws Exception {
         DX2 machine = new DX2(mem);
         ArrayList<Feature> features = new ArrayList<>();
         // All features
@@ -196,10 +196,10 @@ public class DX2 {
         return;
     }
 
-    private void applyFilterToInput(){
+    private void applyFilterToInput() throws Exception{
         if (input.q.size() != tapFilter.size()){
             Log.d(TAG, "applyFilterToInput: Array Size Mismatch");
-            return;
+            throw new Exception("ArraySizeMismatch");
         }
 
         for (int i = 0; i < input.q.size(); i++) {

@@ -19,7 +19,7 @@ import java.util.ArrayList;
  * Created by rahim on 3/23/2018.
  */
 
-public class Graph {
+public class MicGraph {
     private static final String TAG = "dbg_GraphActExt: ";
     private Activity activity;
 
@@ -31,7 +31,7 @@ public class Graph {
     void createView(Activity activity) {
         this.activity = activity;
 
-        graph = (com.jjoe64.graphview.GraphView) activity.findViewById(R.id.graph);
+        graph = (com.jjoe64.graphview.GraphView) activity.findViewById(R.id.mic_graph);
 
         Paint paint = new Paint();
         paint.setColor(activity.getResources().getColor(R.color.colorRed));

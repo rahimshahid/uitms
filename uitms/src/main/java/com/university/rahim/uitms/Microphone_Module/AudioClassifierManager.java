@@ -1,5 +1,7 @@
 package com.university.rahim.uitms.Microphone_Module;
 
+import android.util.Log;
+
 import com.university.rahim.uitms.Constants;
 import com.university.rahim.uitms.Microphone_Module.SoundFeatures.Feature;
 import com.university.rahim.uitms.Microphone_Module.SoundFeatures.SoundFeatureExtractor;
@@ -10,7 +12,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import static com.university.rahim.uitms.Constants.listeningDelay;
-import static com.university.rahim.uitms.Constants.rightSensitivity;
+import static com.university.rahim.uitms.Constants.leftRightThreshold;
 
 /**
  * Created by rahim on 3/17/2018.
@@ -42,10 +44,16 @@ public class AudioClassifierManager {
         }
         AudioMem mem = audioProcessor.retrieveTapInfo();
 
-        ArrayList<Feature> features = SoundFeatureExtractor.getTimeDomainFeatures(mem, true);
-        this.tempClassifier(features, resultListener);
-
-        resultListener.onAudioReady(mem);
+        ArrayList<Feature> features = null;
+        try {
+            features = SoundFeatureExtractor.getTimeDomainFeatures(mem, true);
+            this.tempClassifier(features, resultListener);
+            resultListener.onAudioReady(mem);
+        } catch (Exception e) {
+            Log.d(TAG, "triangulate: EXCEPTION");
+            this.pause();
+            this.start();
+        }
     }
 
     public void triangulateDelayed(final TapSubscription.ResultCallback resultlistener){
@@ -63,7 +71,7 @@ public class AudioClassifierManager {
         int leftPoints = 0;
         int rightPoints = 0;
 
-        // First Left Detection
+        // First Detection
         double fld = getFeatureValAbs(features, SoundFeatureExtractor.FEATURES.FIRST_LEFT_DETECTION);    
         double frd = getFeatureValAbs(features, SoundFeatureExtractor.FEATURES.FIRST_RIGHT_DETECTION); 
         if (fld <= frd) {
@@ -108,34 +116,46 @@ public class AudioClassifierManager {
             bottomPoints += 10;
         }
 
+        double ampDelta = getFeatureValAbs(features, SoundFeatureExtractor.FEATURES.AMP_DELTA);
+        double dx2Delta = getFeatureValAbs(features, SoundFeatureExtractor.FEATURES.DX2_DELTA);
+
         // LEFT, RIGHT Decision
-        if (mampl + mampr <= rightSensitivity){
-            leftPoints += 60;
-        } else {
+        if(ampDelta >= leftRightThreshold){
             rightPoints += 60;
+        } else if (ampDelta < 7000){
+            leftPoints += 60;
+        }
+
+        if (mampl + mampr <= 9000){
+            leftPoints += 30;
+        } else {
+            rightPoints += 30;
         }
 
         if (aampl + aampr <= 30){
-            leftPoints += 40;
+            leftPoints += 10;
         } else {
-            rightPoints += 40;
+            rightPoints += 10;
         }
 
-        if (topPoints >= bottomPoints) {
-            //Log.d(TAG, "tempClassifier: TOP");
-            resultListener.onResultReady(Constants.DIRECTION.TOP);
-        } else {
-            //Log.d(TAG, "tempClassifier: BOTTOM");
-            resultListener.onResultReady(Constants.DIRECTION.BOTTOM);
-        }
+        //if(!(ampDelta > 7000 && ampDelta< 11000)) {
 
-        if (leftPoints >= rightPoints) {
-            //Log.d(TAG, "tempClassifier: LEFT");
-            resultListener.onResultReady(Constants.DIRECTION.LEFT);
-        } else {
-            //Log.d(TAG, "tempClassifier: RIGHT");
-            resultListener.onResultReady(Constants.DIRECTION.RIGHT);
-        }
+            if (topPoints >= bottomPoints) {
+                //Log.d(TAG, "tempClassifier: TOP");
+                resultListener.onResultReady(Constants.DIRECTION.TOP);
+            } else {
+                //Log.d(TAG, "tempClassifier: BOTTOM");
+                resultListener.onResultReady(Constants.DIRECTION.BOTTOM);
+            }
+       // } else {
+            if (leftPoints >= rightPoints) {
+                //Log.d(TAG, "tempClassifier: LEFT");
+                resultListener.onResultReady(Constants.DIRECTION.LEFT);
+            } else {
+                //Log.d(TAG, "tempClassifier: RIGHT");
+                resultListener.onResultReady(Constants.DIRECTION.RIGHT);
+            }
+       // }
     }
 
     private double getFeatureValAbs(ArrayList<Feature> features, SoundFeatureExtractor.FEATURES name){

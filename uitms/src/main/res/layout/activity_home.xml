@@ -206,10 +206,10 @@
                 android:textSize="18sp"
                 android:text="Tap in the Four Directions Around the Phone"/>
 
-            <com.jjoe64.graphview.GraphView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/graph" />
+                <com.jjoe64.graphview.GraphView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/mic_graph" />
 
         </LinearLayout>
 
