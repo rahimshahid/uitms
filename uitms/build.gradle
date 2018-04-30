@@ -36,6 +36,7 @@ dependencies {
     compile 'com.jjoe64:graphview:4.2.1'
     compile 'com.github.jakob-grabner:Circle-Progress-View:v1.3'
     compile 'de.hdodenhof:circleimageview:2.1.0'
+    compile files('libs/opencsv-3.9.jar')
 
     implementation("com.mikepenz:materialdrawer:6.0.6@aar") {
         transitive = true

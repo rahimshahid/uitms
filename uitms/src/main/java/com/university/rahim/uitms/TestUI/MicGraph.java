@@ -87,75 +87,11 @@ public class MicGraph {
     }
 
     void updateGraph(AudioMem mem) {
-        ///*
-        for (AudioValue val : mem.q){
-            series_left.appendData(new DataPoint(time,  1 * val.left), true, mem.maxSize);
+        for (AudioValue val : mem.q) {
+            series_left.appendData(new DataPoint(time, 1 * val.left), true, mem.maxSize);
             series_right.appendData(new DataPoint(time, val.right), true, mem.maxSize);
             time++;
         }
-        //*/
-
-        /*
-        ArrayList<AudioValue> dx = new ArrayList<>();
-        double avgDxRight = 0;
-        double avgDxLeft = 0;
-
-        for (int i = 1; i < mem.q.size() - 1; i++){
-            int leftDx = mem.q.get(i - 1).left - mem.q.get(i + 1).left;
-            int rightDx = mem.q.get(i - 1).right - mem.q.get(i + 1).right;
-            if (Math.abs(leftDx) < 500)
-                leftDx = 0;
-            if (Math.abs(rightDx) < 500)
-                rightDx = 0;
-            avgDxLeft += leftDx;
-            avgDxRight += rightDx;
-            AudioValue res = new AudioValue(leftDx, rightDx);
-            dx.add(res);
-        }
-        avgDxLeft /= dx.size();
-        avgDxRight /= dx.size();
-
-        ArrayList<AudioValue> dx2 = new ArrayList<>();
-
-        for (int i = 1; i < dx.size() - 1; i++){
-            int leftDx = dx.get(i - 1).left - dx.get(i + 1).left;
-            int rightDx = dx.get(i - 1).right - dx.get(i + 1).right;
-            if (Math.abs(leftDx) < 500)
-                leftDx = 0;
-            if (Math.abs(rightDx) < 500)
-                rightDx = 0;
-            AudioValue res = new AudioValue(leftDx, rightDx);
-            dx2.add(res);
-        }
-
-
-
-        //Log.d(TAG, "updateGraph: LeftDxAvg: " + avgDxLeft + " RightDxAvg: " + avgDxRight);
-
-        boolean firstFound = false;
-        for (AudioValue val : dx2){
-            if (!firstFound){
-               if (Math.abs(val.left) > 0 && Math.abs(val.right) == 0) {
-                   Log.d(TAG, "updateGraph: First: TOP / RED");
-                   firstFound = true;
-               } else if (Math.abs(val.right) > 0 && Math.abs(val.left) == 0) {
-                   Log.d(TAG, "updateGraph: First: BOTTOM / GREEN");
-                   firstFound = true;
-               } else if (Math.abs(val.right) > 0 && Math.abs(val.left) > 0) {
-                   if (Math.abs(val.right) > Math.abs(val.left)) {
-                       Log.d(TAG, "updateGraph: First: BOTTOM / GREEN");
-                   } else {
-                       Log.d(TAG, "updateGraph: First: TOP / RED");
-                   }
-                   firstFound = true;
-               }
-            }
-            series_left.appendData(new DataPoint(time,  1 * val.left), true, mem.maxSize);
-            series_right.appendData(new DataPoint(time, val.right), true, mem.maxSize);
-            time++;
-        }
-        */
-
         graph.onDataChanged(true, true);
     }
 }

@@ -18,9 +18,11 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.university.rahim.uitms.Constants;
 import com.university.rahim.uitms.Microphone_Module.AudioMem;
+import com.university.rahim.uitms.Microphone_Module.SoundFeatures.Feature;
 import com.university.rahim.uitms.R;
 import com.university.rahim.uitms.TapSubscription;
 
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -30,12 +32,14 @@ public class HomeActivity extends AppCompatActivity {
     private Drawer drawer;
     private TapSubscription subscription;
     private MicGraph MicGraphView;
+    private MicTraining micTrainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         createViews();
+        micTrainer = new MicTraining(this);
     }
 
     @Override
@@ -65,6 +69,12 @@ public class HomeActivity extends AppCompatActivity {
             }
 
             @Override
+            public void onFeaturesReady(ArrayList<Feature> features) {
+                Log.d(TAG, "onFeaturesReady: ");
+                micTrainer.onTap(features);
+            }
+
+            @Override
             public void onResultReady(Constants.DIRECTION dir) {
                 Log.d(TAG, "onResultReady: " + dir.toString());
                 HomeActivity.this.UiOnTapDetected(dir);
@@ -77,7 +87,6 @@ public class HomeActivity extends AppCompatActivity {
         subscription = null;
     }
 
-
     private void createViews(){
         NavDrawerInit();
 
@@ -89,12 +98,12 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
-
     private void NavDrawerInit() {
         new DrawerBuilder().withActivity(this).build();
 
         PrimaryDrawerItem item1 = new PrimaryDrawerItem().withIdentifier(1).withName("HOME");
-        SecondaryDrawerItem item2 = new SecondaryDrawerItem().withIdentifier(2).withName("Settings");
+        SecondaryDrawerItem item2 = new SecondaryDrawerItem().withIdentifier(3).withName("Settings");
+        SecondaryDrawerItem item3 = new SecondaryDrawerItem().withIdentifier(4).withName("Training Mode");
 
         AccountHeader headerResult = new AccountHeaderBuilder()
                 .withActivity(this)
@@ -119,7 +128,8 @@ public class HomeActivity extends AppCompatActivity {
                 .addDrawerItems(
                         item1,
                         new DividerDrawerItem(),
-                        item2
+                        item2,
+                        item3
                 )
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
@@ -135,6 +145,14 @@ public class HomeActivity extends AppCompatActivity {
                                 Intent i = new Intent(HomeActivity.this, SettingsActivity.class);
                                 finish();
                                 startActivity(i);
+                                break;
+                            case 4:
+                                if (micTrainer.isUiVisible())
+                                    micTrainer.stop();
+                                else
+                                    micTrainer.start();
+
+                                HomeActivity.this.drawer.closeDrawer();
                                 break;
                         }
 

@@ -47,10 +47,15 @@ public class AudioClassifierManager {
         ArrayList<Feature> features = null;
         try {
             features = SoundFeatureExtractor.getTimeDomainFeatures(mem, true);
+            ArrayList<Feature> toFile = new ArrayList<>();
+            for (Feature f:features) {
+                toFile.add(new Feature(f.name, f.val));
+            }
+            resultListener.onFeaturesReady(toFile);
             this.tempClassifier(features, resultListener);
             resultListener.onAudioReady(mem);
         } catch (Exception e) {
-            Log.d(TAG, "triangulate: EXCEPTION");
+            Log.d(TAG, "triangulate: EXCEPTION " + e.toString());
             this.pause();
             this.start();
         }
@@ -70,6 +75,8 @@ public class AudioClassifierManager {
         int bottomPoints = 0;
         int leftPoints = 0;
         int rightPoints = 0;
+        boolean vertical = false;
+        boolean horizontal = false;
 
         // First Detection
         double fld = getFeatureValAbs(features, SoundFeatureExtractor.FEATURES.FIRST_LEFT_DETECTION);    
@@ -138,8 +145,17 @@ public class AudioClassifierManager {
             rightPoints += 10;
         }
 
-        //if(!(ampDelta > 7000 && ampDelta< 11000)) {
+        double detectionDelta = getFeatureValAbs(features, SoundFeatureExtractor.FEATURES.DETECTION_DELTA);
 
+        /*
+        if (((detectionDelta >= 9 && ampDelta> 12000) || (mdx2r > 7000)) || (mdx2l > 6000)){
+            vertical = true;
+        } else {
+            //horizontal = true;
+        }
+        */
+
+        if (vertical) {
             if (topPoints >= bottomPoints) {
                 //Log.d(TAG, "tempClassifier: TOP");
                 resultListener.onResultReady(Constants.DIRECTION.TOP);
@@ -147,7 +163,7 @@ public class AudioClassifierManager {
                 //Log.d(TAG, "tempClassifier: BOTTOM");
                 resultListener.onResultReady(Constants.DIRECTION.BOTTOM);
             }
-       // } else {
+        } else if (horizontal) {
             if (leftPoints >= rightPoints) {
                 //Log.d(TAG, "tempClassifier: LEFT");
                 resultListener.onResultReady(Constants.DIRECTION.LEFT);
@@ -155,7 +171,23 @@ public class AudioClassifierManager {
                 //Log.d(TAG, "tempClassifier: RIGHT");
                 resultListener.onResultReady(Constants.DIRECTION.RIGHT);
             }
-       // }
+        } else {
+            if (topPoints >= bottomPoints) {
+                //Log.d(TAG, "tempClassifier: TOP");
+                resultListener.onResultReady(Constants.DIRECTION.TOP);
+            } else {
+                //Log.d(TAG, "tempClassifier: BOTTOM");
+                resultListener.onResultReady(Constants.DIRECTION.BOTTOM);
+            }
+
+            if (leftPoints >= rightPoints) {
+                //Log.d(TAG, "tempClassifier: LEFT");
+                resultListener.onResultReady(Constants.DIRECTION.LEFT);
+            } else {
+                //Log.d(TAG, "tempClassifier: RIGHT");
+                resultListener.onResultReady(Constants.DIRECTION.RIGHT);
+            }
+        }
     }
 
     private double getFeatureValAbs(ArrayList<Feature> features, SoundFeatureExtractor.FEATURES name){
