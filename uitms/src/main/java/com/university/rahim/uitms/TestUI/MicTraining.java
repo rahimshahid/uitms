@@ -64,11 +64,9 @@ public class MicTraining {
     }
 
     public void onTap(ArrayList<Feature> features){
-        Log.d(TAG, "onTap: ");
         if (!isTraining)
             return;
 
-        Log.d(TAG, "onTap: true");
         csvHandler.writeAudioFeaturesTofile(features, currentLabel);
     }
 
