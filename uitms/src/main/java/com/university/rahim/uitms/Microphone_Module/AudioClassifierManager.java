@@ -3,6 +3,8 @@ package com.university.rahim.uitms.Microphone_Module;
 import android.util.Log;
 
 import com.university.rahim.uitms.Constants;
+import com.university.rahim.uitms.Microphone_Module.Classifier.Evaluate;
+import com.university.rahim.uitms.Microphone_Module.Classifier.ModelMicRandomForest;
 import com.university.rahim.uitms.Microphone_Module.SoundFeatures.Feature;
 import com.university.rahim.uitms.Microphone_Module.SoundFeatures.SoundFeatureExtractor;
 import com.university.rahim.uitms.TapSubscription;
@@ -20,6 +22,7 @@ import static com.university.rahim.uitms.Constants.leftRightThreshold;
 
 public class AudioClassifierManager {
     private static final String TAG = "dbg_AudioClassifier";
+    ModelMicRandomForest rf = null;
     AudioProcessor audioProcessor = null;
 
     public AudioClassifierManager(){
@@ -29,6 +32,7 @@ public class AudioClassifierManager {
     public void pause(){
         audioProcessor.stopRecording();
         audioProcessor = null;
+        rf = null;
     }
 
     public void start(){
@@ -36,6 +40,7 @@ public class AudioClassifierManager {
             audioProcessor = new AudioProcessor();
         }
         audioProcessor.startRecording();
+        rf = new ModelMicRandomForest();
     }
 
     private void triangulate(TapSubscription.ResultCallback resultListener){
@@ -52,7 +57,8 @@ public class AudioClassifierManager {
                 toFile.add(new Feature(f.name, f.val));
             }
             resultListener.onFeaturesReady(toFile);
-            this.tempClassifier(features, resultListener);
+            //this.tempClassifier(features, resultListener);
+            Log.d(TAG, "triangulate: !!!!" + Evaluate.evalMicClassifier(rf, features));
             resultListener.onAudioReady(mem);
         } catch (Exception e) {
             Log.d(TAG, "triangulate: EXCEPTION " + e.toString());
