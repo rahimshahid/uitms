@@ -61,8 +61,8 @@ public class AudioClassifierManager {
             if (Constants.active_model.compareTo(Constants.ACTIVE_MODEL.ANALYTICAL) == 0) {
                 this.tempAnalyticalClassifier(features, resultListener);
             } else if (Constants.active_model.compareTo(Constants.ACTIVE_MODEL.RAHIMS_TABLE) == 0) {
-                // If the model is not instantiated or instantiated with the wrong random Forest Child class,
-                // re-instantiate it
+                // If the model is not instantiated or instantiated with the
+                // wrong random Forest Child class, re-instantiate it
                 if (rf == null ||
                         !rf.getClass().getSimpleName().matches(ModelMicRandomForestRahimsTable.class.getSimpleName())) {
                     rf = new ModelMicRandomForestRahimsTable();
