@@ -5,6 +5,9 @@ import android.content.Context;
 import com.university.rahim.uitms.Accelerometer_Module.AccelerometerSubscription;
 import com.university.rahim.uitms.Microphone_Module.AudioClassifierManager;
 import com.university.rahim.uitms.Microphone_Module.AudioMem;
+import com.university.rahim.uitms.Microphone_Module.SoundFeatures.Feature;
+
+import java.util.ArrayList;
 
 /**
  * Created by rahim on 3/23/2018.
@@ -47,6 +50,7 @@ public class TapSubscription {
     public interface ResultCallback {
         void onTapDetected();
         void onAudioReady(AudioMem mem);
+        void onFeaturesReady(ArrayList<Feature> features);
         void onResultReady(Constants.DIRECTION dir);
     }
 }

@@ -1,6 +1,11 @@
 package com.university.rahim.uitms.Microphone_Module;
 
+import android.util.Log;
+
 import com.university.rahim.uitms.Constants;
+import com.university.rahim.uitms.Microphone_Module.Classifier.Evaluate;
+import com.university.rahim.uitms.Microphone_Module.Classifier.ModelMicRandomForestRahimsTable;
+import com.university.rahim.uitms.Microphone_Module.Classifier.RandomForest;
 import com.university.rahim.uitms.Microphone_Module.SoundFeatures.Feature;
 import com.university.rahim.uitms.Microphone_Module.SoundFeatures.SoundFeatureExtractor;
 import com.university.rahim.uitms.TapSubscription;
@@ -10,7 +15,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import static com.university.rahim.uitms.Constants.listeningDelay;
-import static com.university.rahim.uitms.Constants.rightSensitivity;
+import static com.university.rahim.uitms.Constants.leftRightThreshold;
 
 /**
  * Created by rahim on 3/17/2018.
@@ -18,6 +23,7 @@ import static com.university.rahim.uitms.Constants.rightSensitivity;
 
 public class AudioClassifierManager {
     private static final String TAG = "dbg_AudioClassifier";
+    RandomForest rf = null;
     AudioProcessor audioProcessor = null;
 
     public AudioClassifierManager(){
@@ -27,6 +33,7 @@ public class AudioClassifierManager {
     public void pause(){
         audioProcessor.stopRecording();
         audioProcessor = null;
+        rf = null;
     }
 
     public void start(){
@@ -42,10 +49,34 @@ public class AudioClassifierManager {
         }
         AudioMem mem = audioProcessor.retrieveTapInfo();
 
-        ArrayList<Feature> features = SoundFeatureExtractor.getTimeDomainFeatures(mem, true);
-        this.tempClassifier(features, resultListener);
+        ArrayList<Feature> features = null;
+        try {
+            features = SoundFeatureExtractor.getTimeDomainFeatures(mem, true);
+            ArrayList<Feature> toFile = new ArrayList<>();
+            for (Feature f:features) {
+                toFile.add(new Feature(f.name, f.val));
+            }
+            resultListener.onFeaturesReady(toFile);
 
-        resultListener.onAudioReady(mem);
+            if (Constants.active_model.compareTo(Constants.ACTIVE_MODEL.ANALYTICAL) == 0) {
+                this.tempAnalyticalClassifier(features, resultListener);
+            } else if (Constants.active_model.compareTo(Constants.ACTIVE_MODEL.RAHIMS_TABLE) == 0) {
+                // If the model is not instantiated or instantiated with the wrong random Forest Child class,
+                // re-instantiate it
+                if (rf == null ||
+                        !rf.getClass().getSimpleName().matches(ModelMicRandomForestRahimsTable.class.getSimpleName())) {
+                    rf = new ModelMicRandomForestRahimsTable();
+                }
+                String res = Evaluate.evalMicClassifier(rf, features);
+                announceResult(res,resultListener);
+            }
+
+            resultListener.onAudioReady(mem);
+        } catch (Exception e) {
+            Log.d(TAG, "triangulate: EXCEPTION " + e.toString());
+            this.pause();
+            this.start();
+        }
     }
 
     public void triangulateDelayed(final TapSubscription.ResultCallback resultlistener){
@@ -57,13 +88,15 @@ public class AudioClassifierManager {
         }, listeningDelay);
     }
 
-    private void tempClassifier(ArrayList<Feature> features, TapSubscription.ResultCallback resultListener) {
+    private void tempAnalyticalClassifier(ArrayList<Feature> features, TapSubscription.ResultCallback resultListener) {
         int topPoints = 0;
         int bottomPoints = 0;
         int leftPoints = 0;
         int rightPoints = 0;
+        boolean vertical = false;
+        boolean horizontal = false;
 
-        // First Left Detection
+        // First Detection
         double fld = getFeatureValAbs(features, SoundFeatureExtractor.FEATURES.FIRST_LEFT_DETECTION);    
         double frd = getFeatureValAbs(features, SoundFeatureExtractor.FEATURES.FIRST_RIGHT_DETECTION); 
         if (fld <= frd) {
@@ -108,33 +141,70 @@ public class AudioClassifierManager {
             bottomPoints += 10;
         }
 
+        double ampDelta = getFeatureValAbs(features, SoundFeatureExtractor.FEATURES.AMP_DELTA);
+        double dx2Delta = getFeatureValAbs(features, SoundFeatureExtractor.FEATURES.DX2_DELTA);
+
         // LEFT, RIGHT Decision
-        if (mampl + mampr <= rightSensitivity){
-            leftPoints += 60;
-        } else {
+        if(ampDelta >= leftRightThreshold){
             rightPoints += 60;
+        } else if (ampDelta < 7000){
+            leftPoints += 60;
+        }
+
+        if (mampl + mampr <= 9000){
+            leftPoints += 30;
+        } else {
+            rightPoints += 30;
         }
 
         if (aampl + aampr <= 30){
-            leftPoints += 40;
+            leftPoints += 10;
         } else {
-            rightPoints += 40;
+            rightPoints += 10;
         }
 
-        if (topPoints >= bottomPoints) {
-            //Log.d(TAG, "tempClassifier: TOP");
-            resultListener.onResultReady(Constants.DIRECTION.TOP);
-        } else {
-            //Log.d(TAG, "tempClassifier: BOTTOM");
-            resultListener.onResultReady(Constants.DIRECTION.BOTTOM);
-        }
+        double detectionDelta = getFeatureValAbs(features, SoundFeatureExtractor.FEATURES.DETECTION_DELTA);
 
-        if (leftPoints >= rightPoints) {
-            //Log.d(TAG, "tempClassifier: LEFT");
-            resultListener.onResultReady(Constants.DIRECTION.LEFT);
+        /*
+        if (((detectionDelta >= 9 && ampDelta> 12000) || (mdx2r > 7000)) || (mdx2l > 6000)){
+            vertical = true;
         } else {
-            //Log.d(TAG, "tempClassifier: RIGHT");
-            resultListener.onResultReady(Constants.DIRECTION.RIGHT);
+            //horizontal = true;
+        }
+        */
+
+        if (vertical) {
+            if (topPoints >= bottomPoints) {
+                //Log.d(TAG, "tempAnalyticalClassifier: TOP");
+                resultListener.onResultReady(Constants.DIRECTION.TOP);
+            } else {
+                //Log.d(TAG, "tempAnalyticalClassifier: BOTTOM");
+                resultListener.onResultReady(Constants.DIRECTION.BOTTOM);
+            }
+        } else if (horizontal) {
+            if (leftPoints >= rightPoints) {
+                //Log.d(TAG, "tempAnalyticalClassifier: LEFT");
+                resultListener.onResultReady(Constants.DIRECTION.LEFT);
+            } else {
+                //Log.d(TAG, "tempAnalyticalClassifier: RIGHT");
+                resultListener.onResultReady(Constants.DIRECTION.RIGHT);
+            }
+        } else {
+            if (topPoints >= bottomPoints) {
+                //Log.d(TAG, "tempAnalyticalClassifier: TOP");
+                resultListener.onResultReady(Constants.DIRECTION.TOP);
+            } else {
+                //Log.d(TAG, "tempAnalyticalClassifier: BOTTOM");
+                resultListener.onResultReady(Constants.DIRECTION.BOTTOM);
+            }
+
+            if (leftPoints >= rightPoints) {
+                //Log.d(TAG, "tempAnalyticalClassifier: LEFT");
+                resultListener.onResultReady(Constants.DIRECTION.LEFT);
+            } else {
+                //Log.d(TAG, "tempAnalyticalClassifier: RIGHT");
+                resultListener.onResultReady(Constants.DIRECTION.RIGHT);
+            }
         }
     }
 
@@ -145,5 +215,17 @@ public class AudioClassifierManager {
             }
         }
         return -1;
+    }
+
+    private void announceResult(String res, TapSubscription.ResultCallback resultListener){
+        if (res.toLowerCase().contains("left".toLowerCase())){
+            resultListener.onResultReady(Constants.DIRECTION.LEFT);
+        }else if (res.toLowerCase().contains("right".toLowerCase())){
+            resultListener.onResultReady(Constants.DIRECTION.RIGHT);
+        }else if (res.toLowerCase().contains("top".toLowerCase())){
+            resultListener.onResultReady(Constants.DIRECTION.TOP);
+        }else if (res.toLowerCase().contains("bottom".toLowerCase())){
+            resultListener.onResultReady(Constants.DIRECTION.BOTTOM);
+        }
     }
 }

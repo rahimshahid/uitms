@@ -7,6 +7,10 @@
     android:background="@color/md_blue_grey_100"
     tools:context="com.university.rahim.uitms.TestUI.HomeActivity">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
     <RelativeLayout
         android:layout_height="match_parent"
         android:layout_width="match_parent"
@@ -198,6 +202,38 @@
 
             </RelativeLayout>
 
+            <LinearLayout
+                android:id="@+id/training_labels"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:visibility="gone">
+
+                <Button
+                    android:id="@+id/bt_training_top"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="TOP"
+                    />
+                <Button
+                    android:id="@+id/bt_training_left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="LEFT"/>
+                <Button
+                    android:id="@+id/bt_training_right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="RIGHT"/>
+                <Button
+                    android:id="@+id/bt_training_bottom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="BOTTOM"/>
+
+            </LinearLayout>
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -206,14 +242,15 @@
                 android:textSize="18sp"
                 android:text="Tap in the Four Directions Around the Phone"/>
 
-            <com.jjoe64.graphview.GraphView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/graph" />
+                <com.jjoe64.graphview.GraphView
+                    android:layout_width="match_parent"
+                    android:layout_height="260dp"
+                    android:id="@+id/mic_graph" />
 
         </LinearLayout>
 
-
     </RelativeLayout>
+
+    </ScrollView>
 
 </RelativeLayout>

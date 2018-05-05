@@ -59,7 +59,9 @@ public class AccelerometerSubscription implements SensorEventListener {
 
             @Override
             public void getWaveOnTap(ArrayList<SensorValue> arr) {
-                //Log.d(TAG, "getWaveOnTap: ");
+                // TODO: Acc classification disabled for now
+                tapListener.onTap(Constants.DIRECTION.LEFT);
+                /*
                 double []wav = new double[96];
 
                 for (int i = 0; i<arr.size();i++) {
@@ -73,6 +75,7 @@ public class AccelerometerSubscription implements SensorEventListener {
                 }
 
                 try {
+
                     String res = evalClassifier(rf, wav);
                     Log.d(TAG, "result: " + res);
                     if (res.contains("Left"))
@@ -83,10 +86,12 @@ public class AccelerometerSubscription implements SensorEventListener {
                         tapListener.onTap(Constants.DIRECTION.TOP);
                     else if (res.contains("Down"))
                         tapListener.onTap(Constants.DIRECTION.BOTTOM);
+
                 }
                 catch (Exception e){
                     Log.d(TAG, "run: " + e.toString());
                 }
+                */
             }
         });
     }

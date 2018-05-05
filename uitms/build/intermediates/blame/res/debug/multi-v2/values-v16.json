@@ -4,7 +4,17 @@
             "outputFile": "C:\\Users\\Rahim\\StudioProjects\\fyp\\uitms\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-v16\\values-v16.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Rahim\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\fd0b74dc9648b856381f99f063b6c70f\\res\\values-v16\\values-v16.xml",
+                    "source": "C:\\Users\\Rahim\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\8fb53299e8f3c9d12ed37bcf713296fb\\res\\values-v16\\values-v16.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "65",
+                        "endOffsets": "116"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\Rahim\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\b8e2d6e2f599114e9db529e5b63d2863\\res\\values-v16\\values-v16.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -20,16 +30,6 @@
                         "endLines": "6",
                         "endColumns": "12",
                         "endOffsets": "289"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\Rahim\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\2977ebd0e07aa4e7d281b35a5f65caf1\\res\\values-v16\\values-v16.xml",
-                    "from": {
-                        "startLines": "2",
-                        "startColumns": "4",
-                        "startOffsets": "55",
-                        "endColumns": "65",
-                        "endOffsets": "116"
                     }
                 }
             ]
