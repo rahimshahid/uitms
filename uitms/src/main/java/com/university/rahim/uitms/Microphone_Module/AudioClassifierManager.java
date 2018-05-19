@@ -4,7 +4,8 @@ import android.util.Log;
 
 import com.university.rahim.uitms.Constants;
 import com.university.rahim.uitms.Microphone_Module.Classifier.Evaluate;
-import com.university.rahim.uitms.Microphone_Module.Classifier.ModelMicRandomForest;
+import com.university.rahim.uitms.Microphone_Module.Classifier.ModelMicRandomForestRahimsTable;
+import com.university.rahim.uitms.Microphone_Module.Classifier.RandomForest;
 import com.university.rahim.uitms.Microphone_Module.SoundFeatures.Feature;
 import com.university.rahim.uitms.Microphone_Module.SoundFeatures.SoundFeatureExtractor;
 import com.university.rahim.uitms.TapSubscription;
@@ -22,7 +23,7 @@ import static com.university.rahim.uitms.Constants.leftRightThreshold;
 
 public class AudioClassifierManager {
     private static final String TAG = "dbg_AudioClassifier";
-    ModelMicRandomForest rf = null;
+    RandomForest rf = null;
     AudioProcessor audioProcessor = null;
 
     public AudioClassifierManager(){
@@ -40,7 +41,6 @@ public class AudioClassifierManager {
             audioProcessor = new AudioProcessor();
         }
         audioProcessor.startRecording();
-        rf = new ModelMicRandomForest();
     }
 
     private void triangulate(TapSubscription.ResultCallback resultListener){
@@ -57,8 +57,19 @@ public class AudioClassifierManager {
                 toFile.add(new Feature(f.name, f.val));
             }
             resultListener.onFeaturesReady(toFile);
-            this.tempClassifier(features, resultListener);
-            //Log.d(TAG, "triangulate: !!!!" + Evaluate.evalMicClassifier(rf, features));
+
+            if (Constants.active_model.compareTo(Constants.ACTIVE_MODEL.ANALYTICAL) == 0) {
+                this.tempAnalyticalClassifier(features, resultListener);
+            } else if (Constants.active_model.compareTo(Constants.ACTIVE_MODEL.RAHIMS_TABLE) == 0) {
+                // If the model is not instantiated or instantiated with the
+                // wrong random Forest Child class, re-instantiate it
+                if (rf == null ||
+                        !rf.getClass().getSimpleName().matches(ModelMicRandomForestRahimsTable.class.getSimpleName())) {
+                    rf = new ModelMicRandomForestRahimsTable();
+                }
+                String res = Evaluate.evalMicClassifier(rf, features);
+                announceResult(res,resultListener);
+            }
             resultListener.onAudioReady(mem);
         } catch (Exception e) {
             Log.d(TAG, "triangulate: EXCEPTION " + e.toString());
@@ -76,7 +87,7 @@ public class AudioClassifierManager {
         }, listeningDelay);
     }
 
-    private void tempClassifier(ArrayList<Feature> features, TapSubscription.ResultCallback resultListener) {
+    private void tempAnalyticalClassifier(ArrayList<Feature> features, TapSubscription.ResultCallback resultListener) {
         int topPoints = 0;
         int bottomPoints = 0;
         int leftPoints = 0;
@@ -163,34 +174,34 @@ public class AudioClassifierManager {
 
         if (vertical) {
             if (topPoints >= bottomPoints) {
-                //Log.d(TAG, "tempClassifier: TOP");
+                //Log.d(TAG, "tempAnalyticalClassifier: TOP");
                 resultListener.onResultReady(Constants.DIRECTION.TOP);
             } else {
-                //Log.d(TAG, "tempClassifier: BOTTOM");
+                //Log.d(TAG, "tempAnalyticalClassifier: BOTTOM");
                 resultListener.onResultReady(Constants.DIRECTION.BOTTOM);
             }
         } else if (horizontal) {
             if (leftPoints >= rightPoints) {
-                //Log.d(TAG, "tempClassifier: LEFT");
+                //Log.d(TAG, "tempAnalyticalClassifier: LEFT");
                 resultListener.onResultReady(Constants.DIRECTION.LEFT);
             } else {
-                //Log.d(TAG, "tempClassifier: RIGHT");
+                //Log.d(TAG, "tempAnalyticalClassifier: RIGHT");
                 resultListener.onResultReady(Constants.DIRECTION.RIGHT);
             }
         } else {
             if (topPoints >= bottomPoints) {
-                //Log.d(TAG, "tempClassifier: TOP");
+                //Log.d(TAG, "tempAnalyticalClassifier: TOP");
                 resultListener.onResultReady(Constants.DIRECTION.TOP);
             } else {
-                //Log.d(TAG, "tempClassifier: BOTTOM");
+                //Log.d(TAG, "tempAnalyticalClassifier: BOTTOM");
                 resultListener.onResultReady(Constants.DIRECTION.BOTTOM);
             }
 
             if (leftPoints >= rightPoints) {
-                //Log.d(TAG, "tempClassifier: LEFT");
+                //Log.d(TAG, "tempAnalyticalClassifier: LEFT");
                 resultListener.onResultReady(Constants.DIRECTION.LEFT);
             } else {
-                //Log.d(TAG, "tempClassifier: RIGHT");
+                //Log.d(TAG, "tempAnalyticalClassifier: RIGHT");
                 resultListener.onResultReady(Constants.DIRECTION.RIGHT);
             }
         }
@@ -203,5 +214,17 @@ public class AudioClassifierManager {
             }
         }
         return -1;
+    }
+
+    private void announceResult(String res, TapSubscription.ResultCallback resultListener){
+        if (res.toLowerCase().contains("left".toLowerCase())){
+            resultListener.onResultReady(Constants.DIRECTION.LEFT);
+        }else if (res.toLowerCase().contains("right".toLowerCase())){
+            resultListener.onResultReady(Constants.DIRECTION.RIGHT);
+        }else if (res.toLowerCase().contains("top".toLowerCase())){
+            resultListener.onResultReady(Constants.DIRECTION.TOP);
+        }else if (res.toLowerCase().contains("bottom".toLowerCase())){
+            resultListener.onResultReady(Constants.DIRECTION.BOTTOM);
+        }
     }
 }

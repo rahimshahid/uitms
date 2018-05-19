@@ -7,13 +7,15 @@ import android.util.Log;
  */
 
 public class Constants {
-    public enum DIRECTION {LEFT, RIGHT, TOP, BOTTOM}
+    public enum DIRECTION {LEFT, RIGHT, TOP, BOTTOM};
+    public enum ACTIVE_MODEL {ANALYTICAL, RAHIMS_TABLE};
 
-    ; // Possible results
+    // Possible results
+    public static ACTIVE_MODEL  active_model = ACTIVE_MODEL.ANALYTICAL; // Current Active Model
 
     // Accelerometer Params (Detection)
 
-    static double minTapThreshold = 0.1; // Decrease if you want higher sensitivity
+    static double minTapThreshold = 0.2; // Decrease if you want higher sensitivity
     static int delayBtwTaps = 250; // Delay in msec that should be given between detecting 2 consecutive taps
 
     // Microphone Params (Triangulation)
@@ -21,7 +23,7 @@ public class Constants {
     public static int listeningDelay = 100;  // Listen for 'x' msec between tap detected and triangulating result
     public static int SamplingRateToBufferSizeRatio = 12;  // BufferSize = Sampling Rate / SamplingRateToBufferSizeRatio
     public static int leftRightThreshold = 8000; // 8000 optimum
-    private static int noiseThreshold = 1000; // 850 optimum, increase if atmosphere has noise
+    private static int noiseThreshold = 2000; // 850 optimum, increase if atmosphere has noise
     //public static int outlierThreshold = 850; // 650 optimum, increase if noise is high
     public static int surroundingSize = 100; // 100 optimum, increase if noise is high
 

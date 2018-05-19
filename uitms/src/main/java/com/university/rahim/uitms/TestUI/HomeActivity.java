@@ -105,6 +105,9 @@ public class HomeActivity extends AppCompatActivity {
         SecondaryDrawerItem item2 = new SecondaryDrawerItem().withIdentifier(3).withName("Settings");
         SecondaryDrawerItem item3 = new SecondaryDrawerItem().withIdentifier(4).withName("Training Mode");
 
+        SecondaryDrawerItem item4 = new SecondaryDrawerItem().withIdentifier(4).withName("Analytical Model");
+        SecondaryDrawerItem item5 = new SecondaryDrawerItem().withIdentifier(4).withName("Rahims Table Model");
+
         AccountHeader headerResult = new AccountHeaderBuilder()
                 .withActivity(this)
                 .withHeaderBackground(R.drawable.drawerback)
@@ -129,8 +132,11 @@ public class HomeActivity extends AppCompatActivity {
                         item1,
                         new DividerDrawerItem(),
                         item2,
-                        item3
-                )
+                        item3,
+                        new DividerDrawerItem(),
+                        item4,
+                        item5
+                        )
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
@@ -151,7 +157,18 @@ public class HomeActivity extends AppCompatActivity {
                                     micTrainer.stop();
                                 else
                                     micTrainer.start();
-
+                                HomeActivity.this.drawer.closeDrawer();
+                                break;
+                            case 5:
+                                break;
+                            case 6:
+                                Constants.active_model = Constants.ACTIVE_MODEL.ANALYTICAL;
+                                HomeActivity.this.drawer.deselect();
+                                HomeActivity.this.drawer.closeDrawer();
+                                break;
+                            case 7:
+                                Constants.active_model = Constants.ACTIVE_MODEL.RAHIMS_TABLE;
+                                HomeActivity.this.drawer.deselect();
                                 HomeActivity.this.drawer.closeDrawer();
                                 break;
                         }

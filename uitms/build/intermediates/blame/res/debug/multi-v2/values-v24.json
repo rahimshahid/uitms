@@ -36,7 +36,7 @@
             "outputFile": "C:\\Users\\Rahim\\StudioProjects\\fyp\\uitms\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-v24\\values-v24.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Rahim\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\fd0b74dc9648b856381f99f063b6c70f\\res\\values-v24\\values-v24.xml",
+                    "source": "C:\\Users\\Rahim\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\b8e2d6e2f599114e9db529e5b63d2863\\res\\values-v24\\values-v24.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7",
                         "startColumns": "4,4,4,4,4,4",
@@ -46,7 +46,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\Rahim\\.gradle\\caches\\transforms-1\\files-1.1\\support-media-compat-26.1.0.aar\\95e2290f144e546a27e266333bfddc13\\res\\values-v24\\values-v24.xml",
+                    "source": "C:\\Users\\Rahim\\.gradle\\caches\\transforms-1\\files-1.1\\support-media-compat-26.1.0.aar\\3fc299764e6d81fe075cec885672fe49\\res\\values-v24\\values-v24.xml",
                     "from": {
                         "startLines": "2,3,4,5",
                         "startColumns": "4,4,4,4",

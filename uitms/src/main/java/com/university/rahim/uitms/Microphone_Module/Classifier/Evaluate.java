@@ -193,7 +193,7 @@ public class Evaluate {
 	}
 	/*
 	public static void main() throws Exception {
-		RandomForest rf = new ModelRandomForest();
+		RandomForest rf = new ModelMicRandomForestRahimsTable();
 
 		File testData = new File("test.csv");
 		boolean exists = testData.exists();
