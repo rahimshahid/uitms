@@ -57,8 +57,8 @@ public class AudioClassifierManager {
                 toFile.add(new Feature(f.name, f.val));
             }
             resultListener.onFeaturesReady(toFile);
-            //this.tempClassifier(features, resultListener);
-            Log.d(TAG, "triangulate: !!!!" + Evaluate.evalMicClassifier(rf, features));
+            this.tempClassifier(features, resultListener);
+            //Log.d(TAG, "triangulate: !!!!" + Evaluate.evalMicClassifier(rf, features));
             resultListener.onAudioReady(mem);
         } catch (Exception e) {
             Log.d(TAG, "triangulate: EXCEPTION " + e.toString());
