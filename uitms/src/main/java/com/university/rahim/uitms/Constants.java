@@ -8,7 +8,7 @@ import android.util.Log;
 
 public class Constants {
     public enum DIRECTION {LEFT, RIGHT, TOP, BOTTOM};
-    public enum ACTIVE_MODEL {ANALYTICAL, RAHIMS_TABLE};
+    public enum ACTIVE_MODEL {ANALYTICAL, WOOD_THICK, WOOD_THIN, PLASTIC_THIN};
 
     // Possible results
     public static ACTIVE_MODEL  active_model = ACTIVE_MODEL.ANALYTICAL; // Current Active Model

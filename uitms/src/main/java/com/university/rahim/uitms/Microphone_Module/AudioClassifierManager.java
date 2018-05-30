@@ -4,7 +4,9 @@ import android.util.Log;
 
 import com.university.rahim.uitms.Constants;
 import com.university.rahim.uitms.Microphone_Module.Classifier.Evaluate;
+import com.university.rahim.uitms.Microphone_Module.Classifier.ModelMicRandomForestPlasticThin;
 import com.university.rahim.uitms.Microphone_Module.Classifier.ModelMicRandomForestRahimsTable;
+import com.university.rahim.uitms.Microphone_Module.Classifier.ModelMicRandomForestWoodThin;
 import com.university.rahim.uitms.Microphone_Module.Classifier.RandomForest;
 import com.university.rahim.uitms.Microphone_Module.SoundFeatures.Feature;
 import com.university.rahim.uitms.Microphone_Module.SoundFeatures.SoundFeatureExtractor;
@@ -60,11 +62,29 @@ public class AudioClassifierManager {
 
             if (Constants.active_model.compareTo(Constants.ACTIVE_MODEL.ANALYTICAL) == 0) {
                 this.tempAnalyticalClassifier(features, resultListener);
-            } else if (Constants.active_model.compareTo(Constants.ACTIVE_MODEL.RAHIMS_TABLE) == 0) {
+            } else if (Constants.active_model.compareTo(Constants.ACTIVE_MODEL.WOOD_THICK) == 0) {
                 // If the model is not instantiated or instantiated with the
                 // wrong random Forest Child class, re-instantiate it
                 if (rf == null ||
                         !rf.getClass().getSimpleName().matches(ModelMicRandomForestRahimsTable.class.getSimpleName())) {
+                    rf = new ModelMicRandomForestRahimsTable();
+                }
+                String res = Evaluate.evalMicClassifier(rf, features);
+                announceResult(res,resultListener);
+            } else if (Constants.active_model.compareTo(Constants.ACTIVE_MODEL.WOOD_THIN) == 0) {
+                // If the model is not instantiated or instantiated with the
+                // wrong random Forest Child class, re-instantiate it
+                if (rf == null ||
+                        !rf.getClass().getSimpleName().matches(ModelMicRandomForestWoodThin.class.getSimpleName())) {
+                    rf = new ModelMicRandomForestRahimsTable();
+                }
+                String res = Evaluate.evalMicClassifier(rf, features);
+                announceResult(res,resultListener);
+            } else if (Constants.active_model.compareTo(Constants.ACTIVE_MODEL.PLASTIC_THIN) == 0) {
+                // If the model is not instantiated or instantiated with the
+                // wrong random Forest Child class, re-instantiate it
+                if (rf == null ||
+                        !rf.getClass().getSimpleName().matches(ModelMicRandomForestPlasticThin.class.getSimpleName())) {
                     rf = new ModelMicRandomForestRahimsTable();
                 }
                 String res = Evaluate.evalMicClassifier(rf, features);

@@ -106,7 +106,9 @@ public class HomeActivity extends AppCompatActivity {
         SecondaryDrawerItem item3 = new SecondaryDrawerItem().withIdentifier(4).withName("Training Mode");
 
         SecondaryDrawerItem item4 = new SecondaryDrawerItem().withIdentifier(4).withName("Analytical Model");
-        SecondaryDrawerItem item5 = new SecondaryDrawerItem().withIdentifier(4).withName("Rahims Table Model");
+        SecondaryDrawerItem item5 = new SecondaryDrawerItem().withIdentifier(4).withName("Wood Thin");
+        SecondaryDrawerItem item6 = new SecondaryDrawerItem().withIdentifier(4).withName("Wood Thick");
+        SecondaryDrawerItem item7 = new SecondaryDrawerItem().withIdentifier(4).withName("Plastic Thin");
 
         AccountHeader headerResult = new AccountHeaderBuilder()
                 .withActivity(this)
@@ -135,7 +137,9 @@ public class HomeActivity extends AppCompatActivity {
                         item3,
                         new DividerDrawerItem(),
                         item4,
-                        item5
+                        item5,
+                        item6,
+                        item7
                         )
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
@@ -167,7 +171,17 @@ public class HomeActivity extends AppCompatActivity {
                                 HomeActivity.this.drawer.closeDrawer();
                                 break;
                             case 7:
-                                Constants.active_model = Constants.ACTIVE_MODEL.RAHIMS_TABLE;
+                                Constants.active_model = Constants.ACTIVE_MODEL.WOOD_THICK;
+                                HomeActivity.this.drawer.deselect();
+                                HomeActivity.this.drawer.closeDrawer();
+                                break;
+                            case 8:
+                                Constants.active_model = Constants.ACTIVE_MODEL.WOOD_THIN;
+                                HomeActivity.this.drawer.deselect();
+                                HomeActivity.this.drawer.closeDrawer();
+                                break;
+                            case 9:
+                                Constants.active_model = Constants.ACTIVE_MODEL.PLASTIC_THIN;
                                 HomeActivity.this.drawer.deselect();
                                 HomeActivity.this.drawer.closeDrawer();
                                 break;
